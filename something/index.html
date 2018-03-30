@@ -81,14 +81,14 @@
 
 <meta name="description" content="重点内容 一道不起眼的js题目 123456for (var i = 0; i &amp;lt; 5; i++) &amp;#123; setTimeout(function() &amp;#123;  console.log(new Date, i); &amp;#125;, 1000);&amp;#125;console.log(new Date, i); 看到这道题目，很多人可能都会得出这样一个答案：0,1,2,3,4,5；看上去">
 <meta property="og:type" content="website">
-<meta property="og:title" content="something">
+<meta property="og:title" content="Hexo">
 <meta property="og:url" content="http://yoursite.com/something/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="重点内容 一道不起眼的js题目 123456for (var i = 0; i &amp;lt; 5; i++) &amp;#123; setTimeout(function() &amp;#123;  console.log(new Date, i); &amp;#125;, 1000);&amp;#125;console.log(new Date, i); 看到这道题目，很多人可能都会得出这样一个答案：0,1,2,3,4,5；看上去">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-30T09:40:51.042Z">
+<meta property="og:updated_time" content="2018-03-30T09:50:30.733Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="something">
+<meta name="twitter:title" content="Hexo">
 <meta name="twitter:description" content="重点内容 一道不起眼的js题目 123456for (var i = 0; i &amp;lt; 5; i++) &amp;#123; setTimeout(function() &amp;#123;  console.log(new Date, i); &amp;#125;, 1000);&amp;#125;console.log(new Date, i); 看到这道题目，很多人可能都会得出这样一个答案：0,1,2,3,4,5；看上去">
 
 
@@ -125,7 +125,7 @@
 
 
 
-  <title>something | Hexo</title>
+  <title> | Hexo</title>
   
 
 
@@ -236,7 +236,7 @@
     <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">something</h1>
+	<h1 class="post-title" itemprop="name headline"></h1>
 
 
 
@@ -253,8 +253,11 @@
 <p>看到这道题目，很多人可能都会得出这样一个答案：0,1,2,3,4,5；看上去似乎并没有上面问题，想一想也没有什么不妥。但是当我们把这段代码放到浏览器中执行时，发现输出的结果为：<br>Fri Mar 30 2018 17:03:38 GMT+0800 (中国标准时间) 5<br>Fri Mar 30 2018 17:03:39 GMT+0800 (中国标准时间) 5<br>Fri Mar 30 2018 17:03:39 GMT+0800 (中国标准时间) 5<br>Fri Mar 30 2018 17:03:39 GMT+0800 (中国标准时间) 5<br>Fri Mar 30 2018 17:03:39 GMT+0800 (中国标准时间) 5<br>Fri Mar 30 2018 17:03:39 GMT+0800 (中国标准时间) 5。</p>
 <p>我们看到程序先在第1s打印出了一个5，在随后的1s内打印出了5次5.<br>这是为什么呢？其实只要能理解js中的闭包、异步、词法作用域等概念，这道题目也就迎刃而解了！</p>
 <p>其实很简单，js中延时函数的回调会在for循环结束之后开始执行，所以程序先输出一次5，因为此时for循环已经结束，i变成了5.在循环的过程中，几乎同时设置了5个定时器，所以在第一次的5输出并且间隔（大约）1s之后输出5个5.</p>
-<p>那么我们怎样改造这段代码，让它输出我们想要看到的结果：5，0，1，2，3，4呢？<br>熟悉闭包的人可能马上就能给出一种答案：<br>for (var i = 0; i &lt; 5; i++) {<br> (function(j) {<br>  setTimeout(function() {<br>   console.log(new Date, j);<br>  }, 1000);<br> })(i);<br>}<br>console.log(new Date, i);<br>这样子显然是没有问题的，我们将i的值传递到IIFE（立即执行函数表达式）中，在每一次迭代时使用IIFE都生成了一个新的作用域，使得延迟函数的回调可以将新的作用域封闭在每一个迭代的内部。<br>但是我们这样做，无疑让代码变得更加庞大复杂，难以让人理解，那有没有更好的做法呢？答案是肯定的。这就需要我们使用一个叫let的新朋友，代码如下：<br>for (let i = 0; i &lt; 5; i++) {<br> setTimeout(function() {<br>  console.log(new Date, i);<br> }, 1000);<br>}<br>console.log(new Date, i);<br>这样是不是简洁明了了许多。<br>let关键字可以将变量绑定到所在的任意作用域中，相当于是为我们使用let的变量隐式地声明了一个所在的块作用域，也就是说每次循环执行时，延迟函数内部的i都会+1。<br>先更到这里吧，过几天更新与这道题目有关的知识（如promise）。之前一直以为js只是拿来做一些页面的动态效果，最近看了一本叫做《你不知道的JavaScript》的书（目前还没看完），才发现js中还有这么多深不见底的坑，以后会经常更新，不好的地方希望大家指出。</p>
-<p>(相关知识点：词法作用域、闭包、同步和异步)</p>
+<p>那么我们怎样改造这段代码，让它输出我们想要看到的结果：5，0，1，2，3，4呢？<br>熟悉闭包的人可能马上就能给出一种答案：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">for (var i = 0; i &lt; 5; i++) &#123;</span><br><span class="line"> (function(j) &#123; // j = i</span><br><span class="line">  setTimeout(function() &#123;</span><br><span class="line">   console.log(new Date, j);</span><br><span class="line">  &#125;, 1000);</span><br><span class="line"> &#125;)(i);</span><br><span class="line">&#125;</span><br><span class="line">console.log(new Date, i);</span><br></pre></td></tr></table></figure>
+<p>这样子显然是没有问题的，我们将i的值传递到IIFE（立即执行函数表达式）中，在每一次迭代时使用IIFE都生成了一个新的作用域，使得延迟函数的回调可以将新的作用域封闭在每一个迭代的内部。<br>但是我们这样做，无疑让代码变得更加庞大复杂，难以让人理解，那有没有更好的做法呢？答案是肯定的。这就需要我们使用一个叫let的新朋友，代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">for (let i = 0; i &lt; 5; i++) &#123;</span><br><span class="line"> setTimeout(function() &#123;</span><br><span class="line">  console.log(new Date, i);</span><br><span class="line"> &#125;, 1000);</span><br><span class="line">&#125;</span><br><span class="line">console.log(new Date, i);</span><br></pre></td></tr></table></figure>
+<p>这样是不是简洁明了了许多。<br>let关键字可以将变量绑定到所在的任意作用域中，相当于是为我们使用let的变量隐式地声明了一个所在的块作用域，也就是说每次循环执行时，延迟函数内部的i都会+1。<br>先更到这里吧，过几天更新与这道题目有关的知识（如promise）。之前一直以为js只是拿来做一些页面的动态效果，最近看了一本叫做《你不知道的JavaScript》的书（目前还没看完），才发现js中还有这么多深不见底的坑，以后会经常更新，不好的地方希望大家指出。</p>
 
         
       </div>

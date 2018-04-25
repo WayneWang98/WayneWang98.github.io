@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="JavaScript中交换变量的一些方法1.使用临时变量：    这是最简单的一种方法，基本上每一个人入门编程都会接触。 123456var a = 1,b = 2,temp;temp = a;a = b;b = tmp;console.log(&amp;apos;a : &amp;apos;,a);console.log(&amp;apos;b : &amp;apos;,b); 2.使用加减法让两个变量之间产生关联：    这">
+<meta name="description" content="JavaScript中交换变量的一些方法 ###1.使用临时变量：    这是最简单的一种方法，基本上每一个人入门编程都会接触。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="js中交换变量的几种方法">
 <meta property="og:url" content="http://yoursite.com/2018/04/13/js中交换变量的几种方法/index.html">
 <meta property="og:site_name" content="WayneWang">
-<meta property="og:description" content="JavaScript中交换变量的一些方法1.使用临时变量：    这是最简单的一种方法，基本上每一个人入门编程都会接触。 123456var a = 1,b = 2,temp;temp = a;a = b;b = tmp;console.log(&amp;apos;a : &amp;apos;,a);console.log(&amp;apos;b : &amp;apos;,b); 2.使用加减法让两个变量之间产生关联：    这">
+<meta property="og:description" content="JavaScript中交换变量的一些方法 ###1.使用临时变量：    这是最简单的一种方法，基本上每一个人入门编程都会接触。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-25T16:04:44.904Z">
+<meta property="og:updated_time" content="2018-04-25T16:20:53.917Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="js中交换变量的几种方法">
-<meta name="twitter:description" content="JavaScript中交换变量的一些方法1.使用临时变量：    这是最简单的一种方法，基本上每一个人入门编程都会接触。 123456var a = 1,b = 2,temp;temp = a;a = b;b = tmp;console.log(&amp;apos;a : &amp;apos;,a);console.log(&amp;apos;b : &amp;apos;,b); 2.使用加减法让两个变量之间产生关联：    这">
+<meta name="twitter:description" content="JavaScript中交换变量的一些方法 ###1.使用临时变量：    这是最简单的一种方法，基本上每一个人入门编程都会接触。">
 
 
 
@@ -310,27 +310,29 @@
       
 
       
-        <p>JavaScript中交换变量的一些方法<br>1.使用临时变量：<br>    这是最简单的一种方法，基本上每一个人入门编程都会接触。</p>
+        <p>JavaScript中交换变量的一些方法</p>
+<p>###1.使用临时变量：<br>    这是最简单的一种方法，基本上每一个人入门编程都会接触。</p>
+<!--more>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var a = 1,b = 2,temp;</span><br><span class="line">temp = a;</span><br><span class="line">a = b;</span><br><span class="line">b = tmp;</span><br><span class="line">console.log(&apos;a : &apos;,a);</span><br><span class="line">console.log(&apos;b : &apos;,b);</span><br></pre></td></tr></table></figure>
-<p>2.使用加减法让两个变量之间产生关联：<br>    这是一种比较巧妙的方法，我们使用一些简单的运算符，无需第三个变量，让两个变量之间产生了关联，下面是代码：</p>
+<p>###2.使用加减法让两个变量之间产生关联：<br>    这是一种比较巧妙的方法，我们使用一些简单的运算符，无需第三个变量，让两个变量之间产生了关联，下面是代码：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var a = 1,b = 2;</span><br><span class="line">a = a + b;</span><br><span class="line">b = a - b;</span><br><span class="line">a = a - b;</span><br><span class="line">console.log(&apos;a : &apos;,a);</span><br><span class="line">console.log(&apos;b : &apos;,b);</span><br><span class="line">然而这种方法的缺点就是只能交换数字，无法交换字符串等。</span><br></pre></td></tr></table></figure>
-<p>3.使用对象交换：<br>在这里我们把a和b的值存放在一个对象中，通过改变对象a的属性来进行交换，简单也很容易理解（ps：属性名a、b和变量a、b并没有半毛钱的关系，萌新需要注意）。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var a = 1,b = 2;</span><br><span class="line">a = &#123;</span><br><span class="line">    a : b,</span><br><span class="line">    b : a</span><br><span class="line">&#125;;</span><br><span class="line">b = a.b;</span><br><span class="line">a = a.a;</span><br><span class="line">console.log(a);//2</span><br><span class="line">console.log(b);//1</span><br></pre></td></tr></table></figure></p>
-<p>4.使用数组进行交换：<br>这种交换方式与使用对象进行变量交换的思想一样，这里就不赘述了，下面贴代码：</p>
+<p>###3.使用对象交换：<br>在这里我们把a和b的值存放在一个对象中，通过改变对象a的属性来进行交换，简单也很容易理解（ps：属性名a、b和变量a、b并没有半毛钱的关系，萌新需要注意）。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var a = 1,b = 2;</span><br><span class="line">a = &#123;</span><br><span class="line">    a : b,</span><br><span class="line">    b : a</span><br><span class="line">&#125;;</span><br><span class="line">b = a.b;</span><br><span class="line">a = a.a;</span><br><span class="line">console.log(a);//2</span><br><span class="line">console.log(b);//1</span><br></pre></td></tr></table></figure></p>
+<p>###4.使用数组进行交换：<br>这种交换方式与使用对象进行变量交换的思想一样，这里就不赘述了，下面贴代码：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var a = 1,b = 2;</span><br><span class="line">a = [a,b];</span><br><span class="line">b = a[0];</span><br><span class="line">a = a[1];</span><br><span class="line">console.log(a);//2</span><br><span class="line">console.log(b);//1</span><br></pre></td></tr></table></figure>
-<p>5.使用异或运算：<br>该方法只适用于数字，对位运算不熟悉的同学建议先补一补位运算的基础知识再来看这个方法，可以先跳过，下面是代码：</p>
+<p>###5.使用异或运算：<br>该方法只适用于数字，对位运算不熟悉的同学建议先补一补位运算的基础知识再来看这个方法，可以先跳过，下面是代码：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var a = 1; // 二进制：0001</span><br><span class="line">var b = 2; // 二进制：0010</span><br><span class="line">a = a ^ b; // 计算结果：a = 0011, b = 0010</span><br><span class="line">b = a ^ b; // 计算结果：a = 0011, b = 0001</span><br><span class="line">a = a ^ b; // 计算结果：a = 0010, b = 0001</span><br><span class="line">console.log(a)//2;</span><br><span class="line">console.log(b)//1;</span><br></pre></td></tr></table></figure>
 <p>如果对位运算比较熟悉，看到这段代码，脑海中就应该想到怎么简化了：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var a = 1;</span><br><span class="line">var b = 2;</span><br><span class="line">a = ( b = (a ^= b) ^ b) ^ a;</span><br><span class="line">console.log(a);</span><br><span class="line">console.log(b);</span><br></pre></td></tr></table></figure>
-<p>6.利用try catch进行交换：<br>虽然是一个好方法，但是实际中使用比较少。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var a = 1,b = 2;</span><br><span class="line">a = (function() &#123;</span><br><span class="line">    try &#123;</span><br><span class="line">        return b;</span><br><span class="line">    &#125; finally &#123;</span><br><span class="line">        b = a;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)();</span><br><span class="line">console.log(a);//2</span><br><span class="line">console.log(b);//1</span><br></pre></td></tr></table></figure></p>
+<p>###6.利用try catch进行交换：<br>虽然是一个好方法，但是实际中使用比较少。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var a = 1,b = 2;</span><br><span class="line">a = (function() &#123;</span><br><span class="line">    try &#123;</span><br><span class="line">        return b;</span><br><span class="line">    &#125; finally &#123;</span><br><span class="line">        b = a;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)();</span><br><span class="line">console.log(a);//2</span><br><span class="line">console.log(b);//1</span><br></pre></td></tr></table></figure></p>
 <p>这里有一个坑，很多朋友可能会认为执行try就直接return b了，为什么还能交换变量？其实在JavaScript中，确实是先执行了try，但是因为有finally的存在，程序并不会马上return b，而是继续执行finally中的代码，此时b变成了1，等到finally执行完毕之后再return b（注意：这里return 的b的值并不是1，而是2，接下来解释为什么是2）。<br>程序运行时，在try中，要返回的结果已经准备好了，就在这个时候，程序跳到了finally（不管try中是否抛出异常，finally中的代码都会执行），执行完finally后，再取出结果，finally对b进行了改变，但不会影响返回的结果。</p>
-<p>7.ES6中的结构赋值<br>先来解释一波解构赋值。<br>解构赋值：允许你使用类似数组或对象字面量的语法将数组和对象的属性赋给各种变量。这种赋值的优势是语法极度简洁，同时还比传统的属性访问方法更为清晰。<br>不太了解的可以去先MDN上看一下有关阮一峰关于解构赋值的理解，讲的还是很清晰的，这里放一个链接：<a href="http://es6.ruanyifeng.com/#docs/destructuring。" target="_blank" rel="noopener">http://es6.ruanyifeng.com/#docs/destructuring。</a></p>
+<p>###7.ES6中的结构赋值<br>先来解释一波解构赋值。<br>解构赋值：允许你使用类似数组或对象字面量的语法将数组和对象的属性赋给各种变量。这种赋值的优势是语法极度简洁，同时还比传统的属性访问方法更为清晰。<br>不太了解的可以去先MDN上看一下有关阮一峰关于解构赋值的理解，讲的还是很清晰的，这里放一个链接：<a href="http://es6.ruanyifeng.com/#docs/destructuring。">http://es6.ruanyifeng.com/#docs/destructuring。</a></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">let a = 1,b = 2;</span><br><span class="line">[a, b] = [b, a];</span><br><span class="line">console.log(a, b);//1，2</span><br></pre></td></tr></table></figure>
 <p>这也是一种很简单的方法。</p>
-<p>8.某位不知名的大神想出来的办法（利用运算符的优先级）：<br>个人认为最厉害的方法，所以把它放到了最后，<br>代码非常简单暴力，也是一种很好用的方法：</p>
+<p>###8.某位不知名的大神想出来的办法（利用运算符的优先级）：<br>个人认为最厉害的方法，所以把它放到了最后，<br>代码非常简单暴力，也是一种很好用的方法：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var a = 1,b = 2;</span><br><span class="line">a = [b, b = a][0];//我可能想几天也想不出来</span><br><span class="line">console.log(a,b);//2,1</span><br></pre></td></tr></table></figure>
 <p>根据运算符的优先级程序会先执行b=a，此时b变为了2，然后根据索引找到了a的值[1,2][0]，即1。</p>
 <p>到这里为止，我所了解的JavaScript中的交换变量的方法就写完了，如有其他方法，欢迎大家补充。</p>
-
+-->
       
     </div>
     
@@ -363,6 +365,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/26/一道不起眼的js题目/" rel="prev" title="">
+                 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -434,7 +440,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

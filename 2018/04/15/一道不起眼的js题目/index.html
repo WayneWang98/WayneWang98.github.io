@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="一道不起眼的js题目 123456for (var i = 0; i &amp;lt; 5; i++) &amp;#123; setTimeout(function() &amp;#123;  console.log(new Date, i); &amp;#125;, 1000);&amp;#125;console.log(new Date, i);">
+<meta name="description" content="123456for (var i = 0; i &amp;lt; 5; i++) &amp;#123; setTimeout(function() &amp;#123;  console.log(new Date, i); &amp;#125;, 1000);&amp;#125;console.log(new Date, i);">
 <meta property="og:type" content="article">
-<meta property="og:title" content="WayneWang">
-<meta property="og:url" content="http://yoursite.com/2018/04/26/一道不起眼的js题目/index.html">
+<meta property="og:title" content="一道不起眼的js题目">
+<meta property="og:url" content="http://yoursite.com/2018/04/15/一道不起眼的js题目/index.html">
 <meta property="og:site_name" content="WayneWang">
-<meta property="og:description" content="一道不起眼的js题目 123456for (var i = 0; i &amp;lt; 5; i++) &amp;#123; setTimeout(function() &amp;#123;  console.log(new Date, i); &amp;#125;, 1000);&amp;#125;console.log(new Date, i);">
+<meta property="og:description" content="123456for (var i = 0; i &amp;lt; 5; i++) &amp;#123; setTimeout(function() &amp;#123;  console.log(new Date, i); &amp;#125;, 1000);&amp;#125;console.log(new Date, i);">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-25T16:20:01.900Z">
+<meta property="og:updated_time" content="2018-04-25T16:26:06.657Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="WayneWang">
-<meta name="twitter:description" content="一道不起眼的js题目 123456for (var i = 0; i &amp;lt; 5; i++) &amp;#123; setTimeout(function() &amp;#123;  console.log(new Date, i); &amp;#125;, 1000);&amp;#125;console.log(new Date, i);">
+<meta name="twitter:title" content="一道不起眼的js题目">
+<meta name="twitter:description" content="123456for (var i = 0; i &amp;lt; 5; i++) &amp;#123; setTimeout(function() &amp;#123;  console.log(new Date, i); &amp;#125;, 1000);&amp;#125;console.log(new Date, i);">
 
 
 
@@ -119,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/04/26/一道不起眼的js题目/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/04/15/一道不起眼的js题目/"/>
 
 
 
 
 
-  <title> | WayneWang</title>
+  <title>一道不起眼的js题目 | WayneWang</title>
   
 
 
@@ -243,7 +243,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/26/一道不起眼的js题目/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/15/一道不起眼的js题目/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Wayne Wang">
@@ -260,7 +260,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline"></h1>
+          <h1 class="post-title" itemprop="name headline">一道不起眼的js题目</h1>
         
 
         <div class="post-meta">
@@ -272,8 +272,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-26T00:17:16+08:00">
-                2018-04-26
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-15T00:06:36+08:00">
+                2018-04-15
               </time>
             
 
@@ -310,8 +310,7 @@
       
 
       
-        <p>一道不起眼的js题目</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">for (var i = 0; i &lt; 5; i++) &#123;</span><br><span class="line"> setTimeout(function() &#123;</span><br><span class="line">  console.log(new Date, i);</span><br><span class="line"> &#125;, 1000);</span><br><span class="line">&#125;</span><br><span class="line">console.log(new Date, i);</span><br></pre></td></tr></table></figure>
+        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">for (var i = 0; i &lt; 5; i++) &#123;</span><br><span class="line"> setTimeout(function() &#123;</span><br><span class="line">  console.log(new Date, i);</span><br><span class="line"> &#125;, 1000);</span><br><span class="line">&#125;</span><br><span class="line">console.log(new Date, i);</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
 <p>看到这道题目，很多人可能都会得出这样一个答案：0,1,2,3,4,5；看上去似乎并没有上面问题，想一想也没有什么不妥。但是当我们把这段代码放到浏览器中执行时，发现输出的结果为：<br>Fri Mar 30 2018 17:03:38 GMT+0800 (中国标准时间) 5<br>Fri Mar 30 2018 17:03:39 GMT+0800 (中国标准时间) 5<br>Fri Mar 30 2018 17:03:39 GMT+0800 (中国标准时间) 5<br>Fri Mar 30 2018 17:03:39 GMT+0800 (中国标准时间) 5<br>Fri Mar 30 2018 17:03:39 GMT+0800 (中国标准时间) 5<br>Fri Mar 30 2018 17:03:39 GMT+0800 (中国标准时间) 5。</p>
 <p>我们看到程序先在第1s打印出了一个5，在随后的1s内打印出了5次5.<br>这是为什么呢？其实只要能理解js中的闭包、异步、词法作用域等概念，这道题目也就迎刃而解了！</p>

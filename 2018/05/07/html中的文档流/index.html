@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="一、什么是文档流？        “流”，我们在生活中经常听到这个词，比如水流，电流。就像水流从高处往低处流一样，我们可以把文档流想象成html元素在浏览器上“流动”。浏览器的顶端就是河流的源头，浏览器的底部就是河流的尽头。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="html中的文档流">
+<meta property="og:url" content="http://yoursite.com/2018/05/07/html中的文档流/index.html">
+<meta property="og:site_name" content="WayneWang">
+<meta property="og:description" content="一、什么是文档流？        “流”，我们在生活中经常听到这个词，比如水流，电流。就像水流从高处往低处流一样，我们可以把文档流想象成html元素在浏览器上“流动”。浏览器的顶端就是河流的源头，浏览器的底部就是河流的尽头。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2018/05/07/html中的文档流/float.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/05/07/html中的文档流/absolute.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/05/07/html中的文档流/fixed.jpg">
+<meta property="og:updated_time" content="2018-05-20T07:24:11.872Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="html中的文档流">
+<meta name="twitter:description" content="一、什么是文档流？        “流”，我们在生活中经常听到这个词，比如水流，电流。就像水流从高处往低处流一样，我们可以把文档流想象成html元素在浏览器上“流动”。浏览器的顶端就是河流的源头，浏览器的底部就是河流的尽头。">
+<meta name="twitter:image" content="http://yoursite.com/2018/05/07/html中的文档流/float.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/05/07/html中的文档流/"/>
+
+
+
+
+
+  <title>html中的文档流 | WayneWang</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/waynewang98.github.io"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_darkblue_121621.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">WayneWang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            我呀！
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/07/html中的文档流/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Wayne Wang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/hsq-logo.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WayneWang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">html中的文档流</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-07T21:34:36+08:00">
+                2018-05-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/css基础篇/" itemprop="url" rel="index">
+                    <span itemprop="name">css基础篇</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong>一、什么是文档流？</strong><br>        “流”，我们在生活中经常听到这个词，比如水流，电流。就像水流从高处往低处流一样，我们可以把文档流想象成html元素在浏览器上“流动”。浏览器的顶端就是河流的源头，浏览器的底部就是河流的尽头。<br>        <a id="more"></a><br>        那么所谓的文档流（normal flow，也被称为“普通流”），指的是就是元素排版布局过程中，元素会自动从左往右，从上往下地遵守这种流式排列方式。<br>        当浏览器渲染html文档时，从顶部开始开始渲染，为元素分配所需要的空间，每一个块级元素单独占一行，行内元素则按照顺序被水平渲染直到在当前行遇到了边界，然后换到下一行的起点继续渲染。那么此时就不得不说一下块级元素和行内元素。</p>
+<p><strong>二、块级元素与行内元素</strong><br>块级元素：顾名思义，这个元素是“一块”，那么作为一个块，它就应该有自己的宽度和高度。而且它比较霸道，每个块级元素默认占一行高度，一行内添加一个块级元素后无法一般无法添加其他元素（float浮动后除外），一般作为容器使用，常见的块级元素有：from、select、  textarea、h1-h6 、table 、button 、hr 、p 、ol 、ul等。</p>
+<p> 结合以上内容，块级元素拥有以下特点：<br>1.每个块级元素都是独自占一行。<br>2.元素的高度、宽度、行高和边距都是可以设置的。　　<br>3.元素的宽度如果不设置的话，默认为父元素的宽度。</p>
+<p>行内元素：显然，这种元素存在于一行内，且能与别的行内元素共同享有一行。常见的行内元素有：span、input、a、em、strong、b、br、img、select等。</p>
+<p>那么行内元素拥有的特点如下：<br>1.每一个行内元素可以和别的行内元素共享一行，相邻的行内元素会排列在同一行里，直到一行排不下了，才会换行。<br>2.行内元素设置width,  height无效，宽度随元素的内容而变化。<br>3.行内水平方向的padding-left和padding-right都会产生边距效果，但是竖直方向上的padding-top和padding-bottom都不会产生边距效果。</p>
+<p><strong>三、替换元素和非替换元素</strong><br>细心的大家肯定发现了，像&lt;img&gt;、&lt;input&gt;、&lt;select&gt;、&lt;textarea&gt;等，它们也是行内元素呀，明明就可以设置宽高啊，那这里就有问题了。其实并不是所有的行内元素都不能设置宽高的。<br>行内元素也分为两种：替换元素和非替换元素。</p>
+<p>######替换元素：<br>浏览器根据元素的标签和属性，来决定其的具体显示内容的元素，常见的有：&lt;img&gt;、&lt;input&gt;、&lt;select&gt;、&lt;textarea&gt;、&lt;object&gt;。比如浏览器根据&lt;img &gt;标签的src属性显示图片。根据&lt;input&gt;的type属性决定显示输入框还是按钮，它们的宽度和高度是可以设置的。</p>
+<p>######非替换元素：<br>内容直接表现给浏览器的元素称为非替换元素，常见的有：&lt;span&gt;、&lt;p&gt;、&lt;label&gt;等。例如&lt;span&gt;，它会将开始和结束标签中的内容直接在浏览器上展示出来。</p>
+<p><strong>四、脱离文档流</strong><br>所谓脱离文档流，即将元素从普通的布局排版（普通文档流）中脱离出来，其他盒子在定位的时候，会当做没看到它（余生你不必再指教了），两者位置重叠都是可以的，但是依然在DOM树中存在。<br>那么会使元素脱离文档流的情况有哪些呢？<br>1.float产生的浮动<br>    使用float脱离文档流时，虽然其他盒子会无视这个元素，但其他盒子内的文本依然会为这个元素让出位置，环绕在该元素的周围。<br>    下面是代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;Title&lt;/title&gt;</span><br><span class="line">    &lt;style&gt;</span><br><span class="line">        .demo1&#123;</span><br><span class="line">            width: 200px;</span><br><span class="line">            height: 200px;</span><br><span class="line">            border: 5px solid red;</span><br><span class="line">            float: left;</span><br><span class="line">        &#125;</span><br><span class="line">        .demo2&#123;</span><br><span class="line">            width: 200px;</span><br><span class="line">            height: 100px;</span><br><span class="line">            border: 5px solid green;</span><br><span class="line">        &#125;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;div class=&quot;demo1&quot;&gt;这是demo1的文本&lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;demo2&quot;&gt;这是demo2的文本&lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p>代码运行效果：<br><img src="/2018/05/07/html中的文档流/float.jpg" alt="absolute"></p>
+<p>2.position:absolute;<br>absolute是绝对定位，绝对定位的元素以第一个非static父元素为参照。如果没有非static的父元素，则以body为参照。<br>下面是例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;Title&lt;/title&gt;</span><br><span class="line">    &lt;style&gt;</span><br><span class="line">        .demo1&#123;</span><br><span class="line">            width: 200px;</span><br><span class="line">            height: 200px;</span><br><span class="line">            border: 5px solid red;</span><br><span class="line">        &#125;</span><br><span class="line">        .demo2&#123;</span><br><span class="line">            width: 200px;</span><br><span class="line">            height: 100px;</span><br><span class="line">            border: 5px solid green;</span><br><span class="line">            position: absolute;</span><br><span class="line">            top: 50px;/*给demo2一个绝对定位，并且距离body顶部 50px*/</span><br><span class="line">        &#125;</span><br><span class="line">        .demo3&#123;</span><br><span class="line">            width: 200px;</span><br><span class="line">            height: 200px;</span><br><span class="line">            border: 5px solid black;</span><br><span class="line">        &#125;</span><br><span class="line">        body&#123;</span><br><span class="line">            border: 2px solid blue;</span><br><span class="line">        &#125;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;div class=&quot;demo1&quot;&gt;这是demo1的文本&lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;demo2&quot;&gt;这是demo2的文本&lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;demo3&quot;&gt;这是demo3的文本&lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p>代码效果如图：<br><img src="/2018/05/07/html中的文档流/absolute.jpg" alt="absolute"><br>我们可以看到第二个div它相对body顶部向下移动了50px；</p>
+<p>3.position:fixed;<br>完全脱离文档流，相对于浏览器窗口进行定位，也就是这个div固定在浏览器窗口上了，不论我们怎么拖动滚动条都无法改变它在浏览器窗口的位置。<br>下面是代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;Title&lt;/title&gt;</span><br><span class="line">    &lt;style&gt;</span><br><span class="line">        .demo1&#123;</span><br><span class="line">            width: 200px;</span><br><span class="line">            height: 200px;</span><br><span class="line">            border: 5px solid red;</span><br><span class="line">        &#125;</span><br><span class="line">        .demo2&#123;</span><br><span class="line">            width: 200px;</span><br><span class="line">            height: 100px;</span><br><span class="line">            border: 5px solid green;</span><br><span class="line">            position: fixed;</span><br><span class="line">            right: 50px;</span><br><span class="line">        &#125;</span><br><span class="line">        .demo3&#123;</span><br><span class="line">            width: 200px;</span><br><span class="line">            height: 200px;</span><br><span class="line">            border: 5px solid black;</span><br><span class="line">        &#125;</span><br><span class="line">        body&#123;</span><br><span class="line">            border: 2px solid blue;</span><br><span class="line">        &#125;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;div class=&quot;demo1&quot;&gt;这是demo1的文本&lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;demo2&quot;&gt;这是demo2的文本&lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;demo3&quot;&gt;这是demo3的文本&lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="/2018/05/07/html中的文档流/fixed.jpg" alt="absolute"></p>
+<p>下面开始讲故事帮助大家理解脱离文档流：<br>一个帅帅的男生（div1）和一个可爱的女孩纸(div2)，他们喜欢着对方，有一天，他们在一起了，从此过上了幸福的生活…..<br>故事怎么可能是这样子的（皮一下）<br>随着时间的推移，在某些事情的影响下（float、fixed、absolute），他们发现对方有很多的缺点，并不是完美的，有一天终于无法忍受对方，“咱们分手吧！”div1说到，balabala，他们分手了（div1脱离了文档流）。“你就当我死了吧”，div1说到。虽然男孩纸div1和女孩纸div2都还在这个世界上过着自己的生活（div1和div2都还存在于DOM树中），但是他们让对方死在了自己的心中（盒子在定位的时候，会当做没看到它）。狗血的故事讲完了。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/02/css盒子模型/" rel="next" title="CSS盒子模型">
+                <i class="fa fa-chevron-left"></i> CSS盒子模型
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/13/一道算法题/" rel="prev" title="一道算法题">
+                一道算法题 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/hsq-logo.jpg"
+                alt="Wayne Wang" />
+            
+              <p class="site-author-name" itemprop="name">Wayne Wang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xuyonglin222.github.io" title="徐永林" target="_blank">徐永林</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://my.csdn.net/liulifeimeng" title="威少" target="_blank">威少</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://dymonelewis.github.io" title="琪琪Dalao" target="_blank">琪琪Dalao</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wayne Wang</span>
+
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
+<script type="text/javascript" src="/js/src/love.js"></script>

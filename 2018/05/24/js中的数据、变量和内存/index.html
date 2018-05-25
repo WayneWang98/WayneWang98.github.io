@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="&amp;emsp;&amp;emsp;今天就说一说js中的数据、内存和变量吧。之前一直对变量关注的比较多，而忽视了内存和数据以及它们三者之间的关系，今天就在这里补一波。 ####一、js中的数据指的是什么？">
+<meta name="description" content="&amp;emsp;&amp;emsp;今天就说一说js中的数据、内存和变量吧。之前一直对变量关注的比较多，而忽视了内存和数据以及它们三者之间的关系，今天就在这里补一波。 一、js中的数据指的是什么？">
 <meta property="og:type" content="article">
 <meta property="og:title" content="js中的数据、变量和内存">
 <meta property="og:url" content="http://yoursite.com/2018/05/24/js中的数据、变量和内存/index.html">
 <meta property="og:site_name" content="WayneWang">
-<meta property="og:description" content="&amp;emsp;&amp;emsp;今天就说一说js中的数据、内存和变量吧。之前一直对变量关注的比较多，而忽视了内存和数据以及它们三者之间的关系，今天就在这里补一波。 ####一、js中的数据指的是什么？">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;今天就说一说js中的数据、内存和变量吧。之前一直对变量关注的比较多，而忽视了内存和数据以及它们三者之间的关系，今天就在这里补一波。 一、js中的数据指的是什么？">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-24T16:18:07.807Z">
+<meta property="og:updated_time" content="2018-05-25T16:17:04.561Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="js中的数据、变量和内存">
-<meta name="twitter:description" content="&amp;emsp;&amp;emsp;今天就说一说js中的数据、内存和变量吧。之前一直对变量关注的比较多，而忽视了内存和数据以及它们三者之间的关系，今天就在这里补一波。 ####一、js中的数据指的是什么？">
+<meta name="twitter:description" content="&amp;emsp;&amp;emsp;今天就说一说js中的数据、内存和变量吧。之前一直对变量关注的比较多，而忽视了内存和数据以及它们三者之间的关系，今天就在这里补一波。 一、js中的数据指的是什么？">
 
 
 
@@ -343,9 +343,10 @@
 
       
         <p>&emsp;&emsp;今天就说一说js中的数据、内存和变量吧。之前一直对变量关注的比较多，而忽视了内存和数据以及它们三者之间的关系，今天就在这里补一波。</p>
-<p>####一、js中的数据指的是什么？<br><a id="more"></a><br>&emsp;&emsp;数据在人们眼中向来都是一个非常抽象的事物，它无处不在，但是我们总是不知道怎么去描述它。而js中的数据，我认为它是指：<em>在内存中可读的, 可传递的、保存了特定信息的“东西”，是我们在内存中所操作的目标。</em>一个函数是数据、一个常量是数据、一个对象也是数据。</p>
-<p>####二、js中的变量<br>&emsp;&emsp;说完了数据，接下来说一下变量。变量这个词相信大家都听说过无数次了，有些人可能会说：“变量不就是通过var 声明的一个东西吗？”这样理解并不是完全正确，例如，我们不使用var，直接a = 1，这样也会声明一个变量。<br>&emsp;&emsp;我所理解的变量：<em>变量就是在程序运行过程中它的值允许改变的量</em>。 一个变量对应一块小内存, 它的值保存在此内存中。变量常常包含两部分：变量名和变量的值。</p>
-<p>####三、js中的简单内存模型<br>&emsp;&emsp;唉？你说了这么多到底什么是内存啊？<br>&emsp;&emsp;我们可以把内存理解为*内存条通电后产生的(临时的)存储空间。一块内存包含2个方面的数据：内部存储的数据和地址值数据。在js的内存模型中内存分为可以分为三个部分：<br>常量池：存放常量的内存区域。<br>栈空间：存放全局变量和局部变量的内存区域。<br>堆空间： 存放对象等复杂数据类型的内存区域。<br>未完待续….明天继续更</p>
+<h4 id="一、js中的数据指的是什么？"><a href="#一、js中的数据指的是什么？" class="headerlink" title="一、js中的数据指的是什么？"></a>一、js中的数据指的是什么？</h4><a id="more"></a>
+<p>&emsp;&emsp;数据在人们眼中向来都是一个非常抽象的事物，它无处不在，但是我们总是不知道怎么去描述它。而js中的数据，我认为它是指：<em>在内存中可读的, 可传递的、保存了特定信息的“东西”，是我们在内存中所操作的目标。</em>一个函数是数据、一个常量是数据、一个对象也是数据。</p>
+<h4 id="二、js中的变量"><a href="#二、js中的变量" class="headerlink" title="二、js中的变量"></a>二、js中的变量</h4><p>&emsp;&emsp;说完了数据，接下来说一下变量。变量这个词相信大家都听说过无数次了，有些人可能会说：“变量不就是通过var 声明的一个东西吗？”这样理解并不是完全正确，例如，我们不使用var，直接a = 1，这样也会声明一个变量。<br>&emsp;&emsp;我所理解的变量：<em>变量就是在程序运行过程中它的值允许改变的量</em>。 一个变量对应一块小内存, 它的值保存在此内存中。变量常常包含两部分：变量名和变量的值。</p>
+<h4 id="三、js中的简单内存模型"><a href="#三、js中的简单内存模型" class="headerlink" title="三、js中的简单内存模型"></a>三、js中的简单内存模型</h4><p>&emsp;&emsp;唉？你说了这么多到底什么是内存啊？<br>&emsp;&emsp;我们可以把内存理解为*内存条通电后产生的(临时的)存储空间。一块内存包含2个方面的数据：内部存储的数据和地址值数据。在js的内存模型中内存分为可以分为三个部分：<br>常量池：存放常量的内存区域。<br>栈空间：存放全局变量和局部变量的内存区域。<br>堆空间： 存放对象等复杂数据类型的内存区域。<br>未完待续….明天继续更</p>
 
       
     </div>
@@ -430,8 +431,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -508,6 +518,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、js中的数据指的是什么？"><span class="nav-number">1.</span> <span class="nav-text">一、js中的数据指的是什么？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二、js中的变量"><span class="nav-number">2.</span> <span class="nav-text">二、js中的变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三、js中的简单内存模型"><span class="nav-number">3.</span> <span class="nav-text">三、js中的简单内存模型</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

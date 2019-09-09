@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="&amp;emsp;之前只用c语言实现过二叉树，最近在面试，也是为了锻炼自己的js水平，今天用了js实现排序二叉树，也算是对之前二叉树相关知识的一个回顾。 什么是二叉排序树（BST）二叉排序树也被称为二叉搜索树，二叉排序树是具有下列性质的二叉树（可以是空树）：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="二叉排序树的创建以及相关操作">
+<meta property="og:url" content="http://yoursite.com/2019/09/09/二叉排序树的创建以及相关操作/index.html">
+<meta property="og:site_name" content="WayneWang">
+<meta property="og:description" content="&amp;emsp;之前只用c语言实现过二叉树，最近在面试，也是为了锻炼自己的js水平，今天用了js实现排序二叉树，也算是对之前二叉树相关知识的一个回顾。 什么是二叉排序树（BST）二叉排序树也被称为二叉搜索树，二叉排序树是具有下列性质的二叉树（可以是空树）：">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/09/09/二叉排序树的创建以及相关操作/example.jpg">
+<meta property="og:updated_time" content="2019-09-09T16:13:17.048Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="二叉排序树的创建以及相关操作">
+<meta name="twitter:description" content="&amp;emsp;之前只用c语言实现过二叉树，最近在面试，也是为了锻炼自己的js水平，今天用了js实现排序二叉树，也算是对之前二叉树相关知识的一个回顾。 什么是二叉排序树（BST）二叉排序树也被称为二叉搜索树，二叉排序树是具有下列性质的二叉树（可以是空树）：">
+<meta name="twitter:image" content="http://yoursite.com/2019/09/09/二叉排序树的创建以及相关操作/example.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/09/09/二叉排序树的创建以及相关操作/"/>
+
+
+
+
+
+  <title>二叉排序树的创建以及相关操作 | WayneWang</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/waynewang98.github.io"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_darkblue_121621.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">WayneWang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            我呀！
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/09/二叉排序树的创建以及相关操作/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Wayne Wang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/hsq-logo.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WayneWang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">二叉排序树的创建以及相关操作</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-09T22:35:10+08:00">
+                2019-09-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/算法呀算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法呀算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>&emsp;之前只用c语言实现过二叉树，最近在面试，也是为了锻炼自己的js水平，今天用了js实现排序二叉树，也算是对之前二叉树相关知识的一个回顾。</p>
+<h5 id="什么是二叉排序树（BST）"><a href="#什么是二叉排序树（BST）" class="headerlink" title="什么是二叉排序树（BST）"></a>什么是二叉排序树（BST）</h5><p>二叉排序树也被称为二叉搜索树，二叉排序树是具有下列性质的二叉树（可以是空树）：<br><a id="more"></a><br>（1）若左子树不空，则左子树上所有节点的值均小于它的根节点的值；<br>（2）若右子树不空，则右子树上所有节点的值均大于它的根节点的值；<br>（3）左、右子树也分别为二叉排序树；<br>（4）没有键值相等的节点。<br><img src="/2019/09/09/二叉排序树的创建以及相关操作/example.jpg" alt="absolute"></p>
+<h5 id="具体算法的思路与实现"><a href="#具体算法的思路与实现" class="headerlink" title="具体算法的思路与实现"></a>具体算法的思路与实现</h5><h6 id="1-定义二叉树相关的数据结构"><a href="#1-定义二叉树相关的数据结构" class="headerlink" title="1.定义二叉树相关的数据结构"></a>1.定义二叉树相关的数据结构</h6><p>排序二叉树是二叉树的一个特例，因此它也具有二叉树的数据结构，我们可以使用定义二叉树的方法来定义它。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Node</span>(<span class="params">val</span>) </span>&#123; <span class="comment">// 定义二叉树的结点类型</span></span><br><span class="line">  <span class="keyword">this</span>.val = val</span><br><span class="line">  <span class="keyword">this</span>.left = <span class="literal">null</span></span><br><span class="line">  <span class="keyword">this</span>.right = <span class="literal">null</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">BinaryTree</span>(<span class="params">arr</span>) </span>&#123; <span class="comment">// 定义二叉树的数据结构，数据为数组arr中的数据</span></span><br><span class="line">  <span class="keyword">this</span>.root = <span class="literal">null</span></span><br><span class="line">  arr.forEach(<span class="function"><span class="params">item</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">this</span>.insert(item) <span class="comment">// 创建二叉树就是在不停的插入结点</span></span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="2-插入结点"><a href="#2-插入结点" class="headerlink" title="2.插入结点"></a>2.插入结点</h6><p>我们使用insert()方法来插入结点，insertNode()方法是insert()方法的关键实现。插入结点的方法如下：<br>通过递归依次将待插入的节点与排序二叉树的部分节点进行大小比较。从根节点开始，遵循左子节点小于当前节点，右子节点大于当前节点的规则进行递归插入。比如：我们需要插入一个比父亲结点小的元素，如果父亲结点左孩子为空，那么我们把它直接插入到父亲结点的左边；否则，我们只能在父亲结点的左孩子的左孩子进行插入，以此类推。这段话可能有点绕口，下面解合代码以及注释应该就一目了然了。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">BinaryTree.prototype.insert = <span class="function"><span class="keyword">function</span> (<span class="params">val</span>) </span>&#123; <span class="comment">// 为二叉树新增结点</span></span><br><span class="line">  <span class="keyword">let</span> newNode = <span class="keyword">new</span> Node(val) <span class="comment">// 定义要插入的结点</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">this</span>.root === <span class="literal">null</span>) &#123;</span><br><span class="line">    <span class="keyword">this</span>.root = newNode</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">this</span>.insertNode(<span class="keyword">this</span>.root, newNode)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">BinaryTree.prototype.insertNode = <span class="function"><span class="keyword">function</span> (<span class="params">node, newNode</span>) </span>&#123; <span class="comment">// 在父亲结点左孩子或右孩子处插入结点</span></span><br><span class="line">  <span class="keyword">if</span> (newNode.val &lt; node.val) &#123; <span class="comment">// 新结点小于父亲结点，放左边</span></span><br><span class="line">    <span class="keyword">if</span> (node.left === <span class="literal">null</span>) &#123; <span class="comment">// 没有左孩子，可以直接插入</span></span><br><span class="line">      node.left = newNode</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// 如果有了左孩子，则在将该结点插入左孩子的左孩子，递归</span></span><br><span class="line">      <span class="keyword">this</span>.insertNode(node.left, newNode) </span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123; <span class="comment">// 新结点大于父亲结点，放右边</span></span><br><span class="line">    <span class="keyword">if</span> (node.right === <span class="literal">null</span>) &#123; <span class="comment">// 没有右孩子，可以直接插入</span></span><br><span class="line">      node.right = newNode</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// 如果有了右孩子，则在将该结点插入右孩子的右孩子，递归</span></span><br><span class="line">      <span class="keyword">this</span>.insertNode(node.right, newNode) </span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="3-三种遍历方式"><a href="#3-三种遍历方式" class="headerlink" title="3.三种遍历方式"></a>3.三种遍历方式</h6><p>常见的三种遍历方式为：前序遍历、中序遍历、后序遍历。层次遍历以及上述方法的非递归实现在更新了栈和队列的数据结构之后再去讲，这里先忽略。<br>1.前序遍历的操作过程如下：<br>如果二叉树为空树，则什么都不做，否则。<br>（1）访问根结点。<br>（2）前序遍历左子树。<br>（3）前序遍历右子树。<br>作用：前序遍历可以用来复制二叉树，每个结点只用访问一遍，效率非常的高。<br>对应的代码如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">BinaryTree.prototype.preOrder = <span class="function"><span class="keyword">function</span> (<span class="params">node</span>) </span>&#123; <span class="comment">// 前序遍历二叉树</span></span><br><span class="line">  <span class="keyword">if</span> (node) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(node.val)</span><br><span class="line">    <span class="keyword">this</span>.preOrder(node.left)</span><br><span class="line">    <span class="keyword">this</span>.preOrder(node.right)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>2.中序遍历的操作过程如下：<br>如果二叉树为空树，则什么都不做，否则。<br>（1）中序遍历左子树。<br>（2）访问根节点。<br>（3）中序遍历右子树。<br>作用：中序遍历之后会得到一个升序排列的序列，因此它可以用来对无重复数据的数组进行排序，时间复杂度为O(logn)。<br>对应的代码如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">BinaryTree.prototype.inOrder = <span class="function"><span class="keyword">function</span> (<span class="params">node</span>) </span>&#123; <span class="comment">// 中序遍历二叉树</span></span><br><span class="line">  <span class="keyword">if</span> (node) &#123;</span><br><span class="line">    <span class="keyword">this</span>.inOrder(node.left)</span><br><span class="line">    <span class="built_in">console</span>.log(node.val)</span><br><span class="line">    <span class="keyword">this</span>.inOrder(node.right)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>3.后序遍历的操作过程如下：<br>如果二叉树为空树，则什么都不做，否则。<br>（1）后序遍历左子树。<br>（2）后序遍历右子树。<br>（3）访问根节点。<br>作用：操作系统中的相关的文件访问操作，因为它很容易计算路径。<br>对应代码如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">BinaryTree.prototype.postOrder = <span class="function"><span class="keyword">function</span> (<span class="params">node</span>) </span>&#123; <span class="comment">// 后序遍历二叉树</span></span><br><span class="line">  <span class="keyword">if</span> (node) &#123;</span><br><span class="line">    <span class="keyword">this</span>.postOrder(node.left)</span><br><span class="line">    <span class="keyword">this</span>.postOrder(node.right)</span><br><span class="line">    <span class="built_in">console</span>.log(node.val)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="4-查找二叉树中的最小与最大结点"><a href="#4-查找二叉树中的最小与最大结点" class="headerlink" title="4.查找二叉树中的最小与最大结点"></a>4.查找二叉树中的最小与最大结点</h6><p>这个其实非常好理解，因为二叉排序树总是父亲结点的值大于左孩子的值，且小于右孩子的值，那么当我们查找最大或最小值时，只需要一直沿着一侧查找就可以了。代码如下，也非常的简单：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 查找二叉树中的最小值结点</span></span><br><span class="line">BinaryTree.prototype.getMinNode = <span class="function"><span class="keyword">function</span> (<span class="params">node</span>) </span>&#123; </span><br><span class="line">  <span class="keyword">let</span> p = node</span><br><span class="line">  <span class="keyword">while</span> (p.left !== <span class="literal">null</span>) &#123;</span><br><span class="line">    p = p.left</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> p</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 查找二叉树中的最大值结点</span></span><br><span class="line">BinaryTree.prototype.getMaxNode = <span class="function"><span class="keyword">function</span> (<span class="params">node</span>) </span>&#123; </span><br><span class="line">  <span class="keyword">let</span> p = node</span><br><span class="line">  <span class="keyword">while</span> (p.right !== <span class="literal">null</span>) &#123;</span><br><span class="line">    p = p.right</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> p</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="5-查找二叉树中的是否存在值为num的某个结点"><a href="#5-查找二叉树中的是否存在值为num的某个结点" class="headerlink" title="5.查找二叉树中的是否存在值为num的某个结点"></a>5.查找二叉树中的是否存在值为num的某个结点</h6><p>这个也是利用了二叉排序树的特效，当num比当前结点值小时，只需要向左侧查找，反之向右侧查找即可，与第4点类似，代码如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 查找二叉树中是否存在值为num的某个结点</span></span><br><span class="line">BinaryTree.prototype.searchNode = <span class="function"><span class="keyword">function</span> (<span class="params">node, num</span>) </span>&#123; </span><br><span class="line">  <span class="keyword">if</span> (node) &#123;</span><br><span class="line">    <span class="keyword">if</span> (num &lt; node.val) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">this</span>.searchNode(node.left, num)</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (num &gt; node.val) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">this</span>.searchNode(node.right, num)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="6-删除值为val的结点"><a href="#6-删除值为val的结点" class="headerlink" title="6.删除值为val的结点"></a>6.删除值为val的结点</h6><p>这个是二叉排序树的操作中比较难的一个，思路是：先在二叉树中找到值为val的结点，如果没找到，则返回false，如果找到了，则进行删除，并且返回true。<br>删除操作需要分四种情况考虑：<br>1.是叶子结点：这个非常简单，找到结点直接删除即可，它的删除不会改变二叉树其他结点的结构。<br>2.只有左孩子：这个也比较简单，只需要找到该结点，并且将该结点node的父结点指向node.left即可。<br>3.只有右孩子：与第2点类似，只是换成了right，这里不多赘述。<br>4.既有左孩子又有右孩子：这个就是比较难的点了，因为我们对该结点删除会改变其余结点的结构，我们使用的方法是：找到这个结点的最小后代结点aux，将aux的值与node进行交换，并删除最小结点。<br>代码如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">BinaryTree.prototype.remove = <span class="function"><span class="keyword">function</span> (<span class="params">node, val</span>) </span>&#123; <span class="comment">// 删除结点</span></span><br><span class="line">  <span class="keyword">if</span> (node === <span class="literal">null</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (val &lt; node.val) &#123;</span><br><span class="line">    node.left = <span class="keyword">this</span>.remove(node.left, val)</span><br><span class="line">    <span class="keyword">return</span> node</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (val &gt; node.val) &#123;</span><br><span class="line">    node.right = <span class="keyword">this</span>.remove(node.right, val)</span><br><span class="line">    <span class="keyword">return</span> node</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123; <span class="comment">// 找到了要删除的结点</span></span><br><span class="line">    <span class="keyword">if</span> (node.left === <span class="literal">null</span> &amp;&amp; node.right === <span class="literal">null</span>) &#123; <span class="comment">// 找到的结点是叶子结点</span></span><br><span class="line">      node = <span class="literal">null</span></span><br><span class="line">      <span class="keyword">return</span> node</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (node.right === <span class="literal">null</span>) &#123; <span class="comment">// 只有左孩子</span></span><br><span class="line">      node = node.left</span><br><span class="line">      <span class="keyword">return</span> node</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (node.left === <span class="literal">null</span>) &#123; <span class="comment">// 只有右孩子</span></span><br><span class="line">      node = node.right</span><br><span class="line">      <span class="keyword">return</span> node</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 以上条件都不符合，即存在左孩子和右孩子</span></span><br><span class="line">    <span class="keyword">let</span> aux = <span class="keyword">this</span>.getMinNode(node.right)</span><br><span class="line">    node.val = aux.val <span class="comment">// 最小结点的值和node进行交换</span></span><br><span class="line">    node.right = <span class="keyword">this</span>.remove(node.right, aux.key) <span class="comment">// 删除最小结点</span></span><br><span class="line">    <span class="keyword">return</span> node</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h5><p>到此为止整个二叉排序树的算法就已经完成了，后续会补充层次遍历以及前、中、后三种遍历方法的非递归实践，如果有什么错误或者不好的地方，欢迎大家指出来。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/31/js中深度克隆的简单实现/" rel="next" title="js中深度克隆的简单实现">
+                <i class="fa fa-chevron-left"></i> js中深度克隆的简单实现
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/hsq-logo.jpg"
+                alt="Wayne Wang" />
+            
+              <p class="site-author-name" itemprop="name">Wayne Wang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xuyonglin222.github.io" title="徐永林" target="_blank">徐永林</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://my.csdn.net/liulifeimeng" title="威少" target="_blank">威少</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://dymonelewis.github.io" title="琪琪Dalao" target="_blank">琪琪Dalao</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#什么是二叉排序树（BST）"><span class="nav-number">1.</span> <span class="nav-text">什么是二叉排序树（BST）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#具体算法的思路与实现"><span class="nav-number">2.</span> <span class="nav-text">具体算法的思路与实现</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-定义二叉树相关的数据结构"><span class="nav-number">2.1.</span> <span class="nav-text">1.定义二叉树相关的数据结构</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-插入结点"><span class="nav-number">2.2.</span> <span class="nav-text">2.插入结点</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#3-三种遍历方式"><span class="nav-number">2.3.</span> <span class="nav-text">3.三种遍历方式</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#4-查找二叉树中的最小与最大结点"><span class="nav-number">2.4.</span> <span class="nav-text">4.查找二叉树中的最小与最大结点</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#5-查找二叉树中的是否存在值为num的某个结点"><span class="nav-number">2.5.</span> <span class="nav-text">5.查找二叉树中的是否存在值为num的某个结点</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#6-删除值为val的结点"><span class="nav-number">2.6.</span> <span class="nav-text">6.删除值为val的结点</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#结语"><span class="nav-number">3.</span> <span class="nav-text">结语</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wayne Wang</span>
+
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
+<script type="text/javascript" src="/js/src/love.js"></script>

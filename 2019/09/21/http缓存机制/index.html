@@ -86,14 +86,14 @@
 <meta property="og:site_name" content="WayneWang">
 <meta property="og:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;缓存机制无处不在，有客户端缓存，服务端缓存，代理服务器缓存等。在HTTP中常见的具有缓存功能的是浏览器缓存，它对浏览器的性能优化以及流量控制都有着重要的作用，也是前端开发中比较重要的一个知识点。接下来将从四个方面整理http缓存的规则：">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2019/09/21/http缓存机制/http缓存机制/strong_cache.jpg">
-<meta property="og:image" content="http://yoursite.com/2019/09/21/http缓存机制/http缓存机制/check_cache.jpg">
-<meta property="og:image" content="http://yoursite.com/2019/09/21/http缓存机制/http缓存机制/baidu_img_cache.png">
-<meta property="og:updated_time" content="2019-09-21T08:13:26.863Z">
+<meta property="og:image" content="http://yoursite.com/2019/09/21/http缓存机制/strong_cache.jpg">
+<meta property="og:image" content="http://yoursite.com/2019/09/21/http缓存机制/check_cache.jpg">
+<meta property="og:image" content="http://yoursite.com/2019/09/21/http缓存机制/baidu_img_cache.png">
+<meta property="og:updated_time" content="2019-09-21T08:39:40.679Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="http缓存机制">
 <meta name="twitter:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;缓存机制无处不在，有客户端缓存，服务端缓存，代理服务器缓存等。在HTTP中常见的具有缓存功能的是浏览器缓存，它对浏览器的性能优化以及流量控制都有着重要的作用，也是前端开发中比较重要的一个知识点。接下来将从四个方面整理http缓存的规则：">
-<meta name="twitter:image" content="http://yoursite.com/2019/09/21/http缓存机制/http缓存机制/strong_cache.jpg">
+<meta name="twitter:image" content="http://yoursite.com/2019/09/21/http缓存机制/strong_cache.jpg">
 
 
 
@@ -356,10 +356,9 @@
 </li>
 </ul>
 <h3 id="缓存的规则"><a href="#缓存的规则" class="headerlink" title="缓存的规则"></a>缓存的规则</h3><p>HTTP的缓存属于客户端缓存，我们认为浏览器存在一个缓存数据库，用于储存一些不经常变化的静态文件（img、css、js等）。我们常常将缓存分为<strong>强制缓存</strong>和<strong>协商缓存</strong>。接下来将对这两种缓存做具体的介绍。</p>
-<h4 id="强制缓存"><a href="#强制缓存" class="headerlink" title="强制缓存"></a>强制缓存</h4><p>当缓存数据库中已有所请求的数据时。客户端直接从缓存数据库中获取数据。当缓存数据库中没有所请求的数据时，客户端的才会从服务端获取数据。过程如下图所示：<br><img src="http缓存机制/strong_cache.jpg" alt="强制缓存执行过程"><br>协商缓存也被称为对比缓存，客户端会先从缓存数据库中获取到一个缓存数据的标识，得到标识后请求服务端验证是否失效（新鲜）。如果没有失效服务端会返回304状态码，此时客户端可以直接从缓存中获取所请求的数据；如果标识失效，服务端会直接返回更新后的数据。<br><img src="http缓存机制/check_cache.jpg" alt="协商缓存"></p>
+<h4 id="强制缓存"><a href="#强制缓存" class="headerlink" title="强制缓存"></a>强制缓存</h4><p>当缓存数据库中已有所请求的数据时。客户端直接从缓存数据库中获取数据。当缓存数据库中没有所请求的数据时，客户端的才会从服务端获取数据。过程如下图所示：<br><img src="/2019/09/21/http缓存机制/strong_cache.jpg" title="强制缓存执行过程"><br>协商缓存也被称为对比缓存，客户端会先从缓存数据库中获取到一个缓存数据的标识，得到标识后请求服务端验证是否失效（新鲜）。如果没有失效服务端会返回304状态码，此时客户端可以直接从缓存中获取所请求的数据；如果标识失效，服务端会直接返回更新后的数据。<br><img src="/2019/09/21/http缓存机制/check_cache.jpg" title="协商缓存执行过程"></p>
 <h4 id="两者的关系："><a href="#两者的关系：" class="headerlink" title="两者的关系："></a>两者的关系：</h4><p>两类缓存机制可以同时存在，正如字面上的意思一样，强制缓存带有“强制”的意思，强制缓存的优先级高于协商缓存。当执行强制缓存时，如若缓存命中，则直接使用缓存，不再进行缓存协商。</p>
-<h3 id="缓存的方案"><a href="#缓存的方案" class="headerlink" title="缓存的方案"></a>缓存的方案</h3><p>通过上面的内容，我们大概了解了缓存的运行机制，但是，服务器是如何判断缓存是否失效呢？这就是我们接下来要讨论的问题了。我们知道浏览器和服务器进行数据交互的时候是通过http协议进行传递的。http报文中包含首部header和主体部分body。与缓存相关的规则信息就包含在header中，而boby中的内容是HTTP请求真正要传输的部分。比如，某度首页的一个图片资源的HTTP报文header部分的如下：</p>
-<p><img src="http缓存机制/baidu_img_cache.png" alt="百度的图片缓存"><br>接下来我们将对HTTP报文中出现的与缓存规则相关的信息做出详细解释,同样是从强制缓存与协商缓存两个方向进行解释。</p>
+<h3 id="缓存的方案"><a href="#缓存的方案" class="headerlink" title="缓存的方案"></a>缓存的方案</h3><p>通过上面的内容，我们大概了解了缓存的运行机制，但是，服务器是如何判断缓存是否失效呢？这就是我们接下来要讨论的问题了。我们知道浏览器和服务器进行数据交互的时候是通过http协议进行传递的。http报文中包含首部header和主体部分body。与缓存相关的规则信息就包含在header中，而boby中的内容是HTTP请求真正要传输的部分。比如，某度首页的一个图片资源的HTTP报文header部分的如下：<br><img src="/2019/09/21/http缓存机制/baidu_img_cache.png" title="百度缓存响应头"><br>接下来我们将对HTTP报文中出现的与缓存规则相关的信息做出详细解释,同样是从强制缓存与协商缓存两个方向进行解释。</p>
 <h4 id="强制缓存-1"><a href="#强制缓存-1" class="headerlink" title="强制缓存"></a>强制缓存</h4><p>服务器的响应头中通常会有用两个字段来表明——<strong>Expires</strong>和<strong>Cache-Control</strong>。</p>
 <h5 id="Expires"><a href="#Expires" class="headerlink" title="Expires"></a>Expires</h5><p>Exprires的值表示服务端返回的数据到期的时间。当再次请求时的请求时间小于返回的此时间，则直接使用缓存数据。但由于服务端时间和客户端时间可能有误差，这也将导致缓存命中的误差，同时，Expires是HTTP1.0的产物，现在大多数使用Cache-Control替代它。</p>
 <h5 id="Cache-Control"><a href="#Cache-Control" class="headerlink" title="Cache-Control"></a>Cache-Control</h5><p>Cache-Control有很多属性，不同的属性代表的意义也不同，常见的如下：</p>

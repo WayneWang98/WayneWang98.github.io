@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;缓存机制无处不在，有客户端缓存，服务端缓存，代理服务器缓存等。在HTTP中常见的具有缓存功能的是浏览器缓存，它对浏览器的性能优化以及流量控制都有着重要的作用，也是前端开发中比较重要的一个知识点。接下来将从四个方面整理http缓存的规则：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="http缓存机制">
+<meta property="og:url" content="http://yoursite.com/2019/09/21/http缓存机制/index.html">
+<meta property="og:site_name" content="WayneWang">
+<meta property="og:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;缓存机制无处不在，有客户端缓存，服务端缓存，代理服务器缓存等。在HTTP中常见的具有缓存功能的是浏览器缓存，它对浏览器的性能优化以及流量控制都有着重要的作用，也是前端开发中比较重要的一个知识点。接下来将从四个方面整理http缓存的规则：">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/09/21/http缓存机制/http缓存机制/strong_cache.jpg">
+<meta property="og:image" content="http://yoursite.com/2019/09/21/http缓存机制/http缓存机制/check_cache.jpg">
+<meta property="og:image" content="http://yoursite.com/2019/09/21/http缓存机制/http缓存机制/baidu_img_cache.png">
+<meta property="og:updated_time" content="2019-09-21T08:13:26.863Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="http缓存机制">
+<meta name="twitter:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;缓存机制无处不在，有客户端缓存，服务端缓存，代理服务器缓存等。在HTTP中常见的具有缓存功能的是浏览器缓存，它对浏览器的性能优化以及流量控制都有着重要的作用，也是前端开发中比较重要的一个知识点。接下来将从四个方面整理http缓存的规则：">
+<meta name="twitter:image" content="http://yoursite.com/2019/09/21/http缓存机制/http缓存机制/strong_cache.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/09/21/http缓存机制/"/>
+
+
+
+
+
+  <title>http缓存机制 | WayneWang</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/waynewang98.github.io"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_darkblue_121621.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">WayneWang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            我呀！
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/21/http缓存机制/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Wayne Wang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/hsq-logo.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WayneWang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">http缓存机制</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-21T16:06:22+08:00">
+                2019-09-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/浏览器性能/" itemprop="url" rel="index">
+                    <span itemprop="name">浏览器性能</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;缓存机制无处不在，有客户端缓存，服务端缓存，代理服务器缓存等。在HTTP中常见的具有缓存功能的是浏览器缓存，它对浏览器的性能优化以及流量控制都有着重要的作用，也是前端开发中比较重要的一个知识点。接下来将从四个方面整理http缓存的规则：<br><a id="more"></a></p>
+<ul>
+<li>缓存的规则</li>
+<li>缓存的方案</li>
+<li>缓存的优点</li>
+<li><p>刷新页面时缓存的执行过程</p>
+<p>接下来让我们进入正题。</p>
+</li>
+</ul>
+<h3 id="缓存的规则"><a href="#缓存的规则" class="headerlink" title="缓存的规则"></a>缓存的规则</h3><p>HTTP的缓存属于客户端缓存，我们认为浏览器存在一个缓存数据库，用于储存一些不经常变化的静态文件（img、css、js等）。我们常常将缓存分为<strong>强制缓存</strong>和<strong>协商缓存</strong>。接下来将对这两种缓存做具体的介绍。</p>
+<h4 id="强制缓存"><a href="#强制缓存" class="headerlink" title="强制缓存"></a>强制缓存</h4><p>当缓存数据库中已有所请求的数据时。客户端直接从缓存数据库中获取数据。当缓存数据库中没有所请求的数据时，客户端的才会从服务端获取数据。过程如下图所示：<br><img src="http缓存机制/strong_cache.jpg" alt="强制缓存执行过程"><br>协商缓存也被称为对比缓存，客户端会先从缓存数据库中获取到一个缓存数据的标识，得到标识后请求服务端验证是否失效（新鲜）。如果没有失效服务端会返回304状态码，此时客户端可以直接从缓存中获取所请求的数据；如果标识失效，服务端会直接返回更新后的数据。<br><img src="http缓存机制/check_cache.jpg" alt="协商缓存"></p>
+<h4 id="两者的关系："><a href="#两者的关系：" class="headerlink" title="两者的关系："></a>两者的关系：</h4><p>两类缓存机制可以同时存在，正如字面上的意思一样，强制缓存带有“强制”的意思，强制缓存的优先级高于协商缓存。当执行强制缓存时，如若缓存命中，则直接使用缓存，不再进行缓存协商。</p>
+<h3 id="缓存的方案"><a href="#缓存的方案" class="headerlink" title="缓存的方案"></a>缓存的方案</h3><p>通过上面的内容，我们大概了解了缓存的运行机制，但是，服务器是如何判断缓存是否失效呢？这就是我们接下来要讨论的问题了。我们知道浏览器和服务器进行数据交互的时候是通过http协议进行传递的。http报文中包含首部header和主体部分body。与缓存相关的规则信息就包含在header中，而boby中的内容是HTTP请求真正要传输的部分。比如，某度首页的一个图片资源的HTTP报文header部分的如下：</p>
+<p><img src="http缓存机制/baidu_img_cache.png" alt="百度的图片缓存"><br>接下来我们将对HTTP报文中出现的与缓存规则相关的信息做出详细解释,同样是从强制缓存与协商缓存两个方向进行解释。</p>
+<h4 id="强制缓存-1"><a href="#强制缓存-1" class="headerlink" title="强制缓存"></a>强制缓存</h4><p>服务器的响应头中通常会有用两个字段来表明——<strong>Expires</strong>和<strong>Cache-Control</strong>。</p>
+<h5 id="Expires"><a href="#Expires" class="headerlink" title="Expires"></a>Expires</h5><p>Exprires的值表示服务端返回的数据到期的时间。当再次请求时的请求时间小于返回的此时间，则直接使用缓存数据。但由于服务端时间和客户端时间可能有误差，这也将导致缓存命中的误差，同时，Expires是HTTP1.0的产物，现在大多数使用Cache-Control替代它。</p>
+<h5 id="Cache-Control"><a href="#Cache-Control" class="headerlink" title="Cache-Control"></a>Cache-Control</h5><p>Cache-Control有很多属性，不同的属性代表的意义也不同，常见的如下：</p>
+<ul>
+<li>private：客户端可以缓存。</li>
+<li>public：客户端和代理服务器都可以缓存。</li>
+<li>max-age=t：缓存内容将在t秒后失效。</li>
+<li>s-maxage：覆盖max-age，只在代理服务器中生效。</li>
+<li>no-cache：需要使用协商缓存来验证缓存数据。</li>
+<li>no-store：所有内容都不会缓存。</li>
+<li>max-stale=t：t秒内，即使缓存失效，也使用该缓存。</li>
+<li>min-fresh=t：希望在t秒内获取最新的响应。</li>
+</ul>
+<h4 id="协商缓存"><a href="#协商缓存" class="headerlink" title="协商缓存"></a>协商缓存</h4><p>协商缓存需要进行对比判断是否能够使用缓存。当浏览器第一次请求数据时，服务器会将缓存标识与数据一起响应给客户端，客户端将它们存放在缓存中。当我们再次请求时，客户端会将缓存中的标识发送给服务器，服务器根据此标识判断缓存是否失效。若未失效，返回304状态码，浏览器拿到此状态码就可以直接使用缓存数据了。</p>
+<h5 id="Last-Modified"><a href="#Last-Modified" class="headerlink" title="Last-Modified"></a>Last-Modified</h5><p>Last-Modified：<br>服务器在响应请求时，告诉浏览器资源的最后修改时间。</p>
+<p>if-Modified-Since:<br>浏览器再次请求服务器的时候，请求头会包含此字段，后面跟着在缓存中获得的最后修改时间。服务端收到此请求头发现有if-Modified-Since，则与被请求资源的最后修改时间进行对比，如果一致则返回304和响应报文头，浏览器只需要从缓存中获取信息即可。</p>
+<ul>
+<li>被修改：那么开始传输响应一个整体，服务器返回：200 OK。</li>
+<li>没有被修改：那么只需传输响应header，服务器返回：304 Not Modified</li>
+</ul>
+<p>if-Unmodified-Since:<br>从字面上看, 就是说: 从某个时间点算起, 是否文件没有被修改，这个有点绕。</p>
+<ul>
+<li>没有被修改:则开始`继续’传送文件: 服务器返回: 200 OK</li>
+<li>被修改了:则不传输,服务器返回: 412 Precondition failed (预处理错误)</li>
+</ul>
+<p><em>这两个的区别是一个是修改了才下载一个是没修改才下载。</em></p>
+<p>当然Last-Modified并不是十全十美的，它存在一些问题。比如，在服务器上，一个资源被修改了，但其实际内容根本没发生改变，会因为Last-Modified时间匹配不上而返回了整个实体给客户端（即使客户端缓存里有个一模一样的资源），这就造成了流量的浪费。为了解决这个问题，HTTP1.1推出了Etag。</p>
+<h5 id="Etag"><a href="#Etag" class="headerlink" title="Etag"></a>Etag</h5><p>Etag：<br>服务器响应请求时，通过此字段告诉浏览器当前资源在服务器生成的唯一标识，它的生成规则由服务器决定。</p>
+<p>If-None-Match：<br>再次请求服务器时，浏览器的请求报文头部会包含此字段，后面的值为在缓存中获取的标识。服务器接收到次报文后发现If-None-Match则与被请求资源的唯一标识进行对比。</p>
+<ul>
+<li>不同：说明资源被改动过，则响应整个资源内容，返回状态码200。</li>
+<li>相同：说明资源不需修改，返回302，则响应header，浏览器直接从缓存中获取数据信息。</li>
+</ul>
+<p>但是实际应用中由于Etag的计算是使用算法来得出的，而算法会占用服务端计算的资源，所有服务端的资源都是宝贵的，所以就很少使用Etag了。</p>
+<h3 id="缓存的优点"><a href="#缓存的优点" class="headerlink" title="缓存的优点"></a>缓存的优点</h3><ol>
+<li>减少了冗余的数据传递，节省宽带流量，从而节约资金。</li>
+<li>减少了服务器端的压力，提高了网站性能。</li>
+<li>加快了客户端加载网页的速度 这也正是HTTP缓存属于客户端缓存的原因。</li>
+</ol>
+<h3 id="刷新页面时缓存的执行过程"><a href="#刷新页面时缓存的执行过程" class="headerlink" title="刷新页面时缓存的执行过程"></a>刷新页面时缓存的执行过程</h3><ol>
+<li>浏览器地址栏中写入URL，回车，浏览器发现缓存中有这个文件了，不用继续请求了，直接去缓存拿。（最快的方法）</li>
+<li>按F5刷新页面，F5就是告诉浏览器，别偷懒，好歹去服务器看看这个文件是否有过期了。于是浏览器就发送一个请求带上If-Modify-since。</li>
+<li>Ctrl+F5，告诉浏览器，先删除缓存中的这个资源，然后再去服务器请求个完整的资源文件下来，于是客户端就完成了强行更新的操作。</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/09/09/二叉排序树的创建以及相关操作/" rel="next" title="二叉排序树的创建以及相关操作">
+                <i class="fa fa-chevron-left"></i> 二叉排序树的创建以及相关操作
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/hsq-logo.jpg"
+                alt="Wayne Wang" />
+            
+              <p class="site-author-name" itemprop="name">Wayne Wang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xuyonglin222.github.io" title="徐永林" target="_blank">徐永林</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://my.csdn.net/liulifeimeng" title="威少" target="_blank">威少</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://dymonelewis.github.io" title="琪琪Dalao" target="_blank">琪琪Dalao</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#缓存的规则"><span class="nav-number">1.</span> <span class="nav-text">缓存的规则</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#强制缓存"><span class="nav-number">1.1.</span> <span class="nav-text">强制缓存</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#两者的关系："><span class="nav-number">1.2.</span> <span class="nav-text">两者的关系：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缓存的方案"><span class="nav-number">2.</span> <span class="nav-text">缓存的方案</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#强制缓存-1"><span class="nav-number">2.1.</span> <span class="nav-text">强制缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Expires"><span class="nav-number">2.1.1.</span> <span class="nav-text">Expires</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Cache-Control"><span class="nav-number">2.1.2.</span> <span class="nav-text">Cache-Control</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#协商缓存"><span class="nav-number">2.2.</span> <span class="nav-text">协商缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Last-Modified"><span class="nav-number">2.2.1.</span> <span class="nav-text">Last-Modified</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Etag"><span class="nav-number">2.2.2.</span> <span class="nav-text">Etag</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缓存的优点"><span class="nav-number">3.</span> <span class="nav-text">缓存的优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#刷新页面时缓存的执行过程"><span class="nav-number">4.</span> <span class="nav-text">刷新页面时缓存的执行过程</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wayne Wang</span>
+
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
+<script type="text/javascript" src="/js/src/love.js"></script>

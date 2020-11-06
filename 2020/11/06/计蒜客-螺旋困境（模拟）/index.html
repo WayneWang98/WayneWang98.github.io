@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="计蒜客-螺旋困境（模拟）- 解题方案问题描述：小W是一个宅男，喜欢发呆，并幻想一些不切实际的事情。今天，小W又开始做他的白日梦了。他梦见他被困在了一条隧道里，周围漆黑一片。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计蒜客-螺旋困境（模拟）">
+<meta property="og:url" content="http://yoursite.com/2020/11/06/计蒜客-螺旋困境（模拟）/index.html">
+<meta property="og:site_name" content="WayneWang">
+<meta property="og:description" content="计蒜客-螺旋困境（模拟）- 解题方案问题描述：小W是一个宅男，喜欢发呆，并幻想一些不切实际的事情。今天，小W又开始做他的白日梦了。他梦见他被困在了一条隧道里，周围漆黑一片。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2020/11/06/计蒜客-螺旋困境（模拟）/problemC.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/11/06/计蒜客-螺旋困境（模拟）/c_3d.png">
+<meta property="og:updated_time" content="2020-11-06T02:23:13.351Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="计蒜客-螺旋困境（模拟）">
+<meta name="twitter:description" content="计蒜客-螺旋困境（模拟）- 解题方案问题描述：小W是一个宅男，喜欢发呆，并幻想一些不切实际的事情。今天，小W又开始做他的白日梦了。他梦见他被困在了一条隧道里，周围漆黑一片。">
+<meta name="twitter:image" content="http://yoursite.com/2020/11/06/计蒜客-螺旋困境（模拟）/problemC.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/11/06/计蒜客-螺旋困境（模拟）/"/>
+
+
+
+
+
+  <title>计蒜客-螺旋困境（模拟） | WayneWang</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/waynewang98.github.io"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_darkblue_121621.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">WayneWang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            我呀！
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/06/计蒜客-螺旋困境（模拟）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Wayne Wang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/hsq-logo.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WayneWang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">计蒜客-螺旋困境（模拟）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-11-06T10:16:56+08:00">
+                2020-11-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/算法呀算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法呀算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="计蒜客-螺旋困境（模拟）-解题方案"><a href="#计蒜客-螺旋困境（模拟）-解题方案" class="headerlink" title="计蒜客-螺旋困境（模拟）- 解题方案"></a>计蒜客-螺旋困境（模拟）- 解题方案</h2><h3 id="问题描述："><a href="#问题描述：" class="headerlink" title="问题描述："></a>问题描述：</h3><p>小W是一个宅男，喜欢发呆，并幻想一些不切实际的事情。今天，小W又开始做他的白日梦了。他梦见他被困在了一条隧道里，周围漆黑一片。<a id="more"></a>作为一个宅男，小W自然地掏出了手机，打开定位系统，确定了他的位置。又由此在网上搜索到了关于隧道的信息。这条隧道是由一个点向外，呈六角螺旋形展开，并且没有其他的支路。最小的一圈每条边的长度都是1米，边长向外依次增大到2，3…米，如下图所示。<br><img src="/2020/11/06/计蒜客-螺旋困境（模拟）/problemC.jpg" alt="absolute"><br>输入数据以一个整数T&lt;10^4^开头，表示测试数据组数。以下每行为一组测试数据，包括4个整数X1,Y1,X2,Y2，描述了小W所在的位置和出口位置的坐标。所有坐标的绝对值不超过10^18^，并保证答案不超出64位有符号整数的表示范围。</p>
+<p>输出对于每组测试数据输出一行，一个整数，表示小W所在的位置和出口的距离。</p>
+<h3 id="样例输入："><a href="#样例输入：" class="headerlink" title="样例输入："></a>样例输入：</h3><p>2<br>1 0 0 1<br>1 1 2 0</p>
+<h3 id="样例输出："><a href="#样例输出：" class="headerlink" title="样例输出："></a>样例输出：</h3><p>2<br>9</p>
+<h3 id="解题思路："><a href="#解题思路：" class="headerlink" title="解题思路："></a>解题思路：</h3><p>本题是一个典型的数学模拟题，如下图所示（最好自己在题干图的基础上再多画几层，这有助于理解），我们可以观察到每一圈的长度是一个公差为6的等差数列（7,13,19,25….），那么要计算两个点之间的距离，其实只要知道它们在自己所属那一圈行走的距离以及它们之间相差了几圈即可，可以通过等差数列求和公式计算出相差圈数所代表的距离。<br><img src="/2020/11/06/计蒜客-螺旋困境（模拟）/c_3d.png" alt="absolute"><br><strong>那么，我们可以把整个求解过程分为三步：</strong><br>1.求出起点和终点分别位于哪一层，用getLayerOfPoint()这个函数来实现。<br>2.求出起点和终点在它们所在那一层上运动的距离，用getPointDisOfLayer()这个函数来实现。<br>3.根据等差数列求和公式、两点之间相差的层数以及第2步中所计算出的距离来求解最后的结果。</p>
+<p><strong>特别需要注意的是</strong>：<br>1.本题中的起点并不一定位于终点的前面，即它们是可以反向的，所以我们在第3步之前若遇到起点位于终点之后的情况，应该交换它们两个的位置。<br>2.本题计算距离需要求绝对值，但abs()函数无法求解long long型的绝对值，需要自己实现一个求解绝对值的方法。</p>
+<h3 id="代码实现："><a href="#代码实现：" class="headerlink" title="代码实现："></a>代码实现：</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">	思路：模拟，通过等差数列进行定位 </span></span><br><span class="line"><span class="comment">*/</span> </span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> LL;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取long long 型数字的绝对值，abs()只能获取int 型数字的绝对值 </span></span><br><span class="line">LL _abs(LL a) &#123;</span><br><span class="line">	<span class="keyword">return</span> a &gt; <span class="number">0</span> ? a : (<span class="number">-1</span> * a);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 根据点的坐标判断某个点在第几层 </span></span><br><span class="line"><span class="function">LL <span class="title">getLayerOfPoint</span><span class="params">(LL x, LL y)</span> </span>&#123; </span><br><span class="line">	LL absX = _abs(x), absY = _abs(y);</span><br><span class="line">	<span class="keyword">if</span> (x == <span class="number">0</span>) <span class="keyword">return</span> _abs(y);</span><br><span class="line">	<span class="keyword">if</span> (y == <span class="number">0</span>) <span class="keyword">return</span> _abs(x); <span class="comment">// 此时把x == y == 0的情况也考虑进去了</span></span><br><span class="line">	<span class="keyword">if</span> ((x &gt; <span class="number">0</span> &amp;&amp; y &gt; <span class="number">0</span>) || (x &lt; <span class="number">0</span> &amp;&amp; y &lt; <span class="number">0</span>)) &#123; <span class="comment">// 在I、III象限（判断时不要用x * y，结果可能会超过long long） </span></span><br><span class="line">		<span class="keyword">return</span> max(absX, absY); <span class="comment">// 此时点所在的层数为x、y种较大的值 </span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (x &lt; <span class="number">0</span> &amp;&amp; y &gt; <span class="number">0</span>) &#123; <span class="comment">// 在II象限 </span></span><br><span class="line">		<span class="keyword">if</span> (x == <span class="number">-1</span>) <span class="keyword">return</span> y; <span class="comment">// x为-1时，层数为y的值 </span></span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">return</span> absX - <span class="number">1</span> + absY; <span class="comment">// 否则，层数为absX - 1、absY两个值相加（类似第四象限的情况） </span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (x &gt; <span class="number">0</span> &amp;&amp; y &lt; <span class="number">0</span>) &#123; <span class="comment">// 在IV象限 </span></span><br><span class="line">		<span class="keyword">return</span> absX + absY;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 查找该点在其所在层所运动的距离（从每一层的起点开始，逆时针走） </span></span><br><span class="line"><span class="function">LL <span class="title">getPointDisOfLayer</span><span class="params">(LL x, LL y, LL n)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (x &gt;= <span class="number">0</span> &amp;&amp; y &gt; <span class="number">0</span>) &#123; <span class="comment">// 在I象限且包括落在y轴的点 </span></span><br><span class="line">		<span class="keyword">if</span> (x &gt;= y) &#123; <span class="comment">// 两段折线不同情况考虑 </span></span><br><span class="line">			<span class="keyword">return</span> <span class="number">3</span> * n + y;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="number">5</span> * n - x;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span> (x &lt; <span class="number">0</span> &amp;&amp; y &gt; <span class="number">0</span>) &#123; <span class="comment">// 在II象限中的点 </span></span><br><span class="line">		<span class="keyword">return</span> <span class="number">5</span> * n - x;</span><br><span class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span> (x &lt;= <span class="number">0</span> &amp;&amp; y &lt; <span class="number">0</span>) &#123; <span class="comment">// 在III象限且包括落在y轴上的点 </span></span><br><span class="line">		<span class="keyword">if</span> (x &lt;= y) &#123;</span><br><span class="line">			<span class="keyword">return</span> -y;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123; <span class="comment">// 2n - |x|</span></span><br><span class="line">			<span class="keyword">return</span> <span class="number">2</span> * n + x;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span> (x &gt; <span class="number">0</span> &amp;&amp; y &lt;= <span class="number">0</span>) &#123; <span class="comment">// 在IV象限且包括落在x轴上的点 </span></span><br><span class="line">		<span class="keyword">return</span> <span class="number">3</span> * n + y;</span><br><span class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span> (x &lt;= <span class="number">0</span> &amp;&amp; y == <span class="number">0</span>) &#123; <span class="comment">// 每一层的起点为0（规定原点也为0） </span></span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n;</span><br><span class="line">	LL x1, y1, x2, y2;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i ++) &#123;</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; x1 &gt;&gt; y1 &gt;&gt; x2 &gt;&gt; y2;</span><br><span class="line">		LL sLayer = getLayerOfPoint(x1, y1);</span><br><span class="line">		LL eLayer = getLayerOfPoint(x2, y2);</span><br><span class="line">		</span><br><span class="line">		LL sDis = getPointDisOfLayer(x1, y1, sLayer);</span><br><span class="line">		LL eDis = getPointDisOfLayer(x2, y2, eLayer);</span><br><span class="line">		</span><br><span class="line"><span class="comment">//		cout &lt;&lt; sLayer &lt;&lt; " " &lt;&lt; sDis &lt;&lt; " " &lt;&lt; eLayer &lt;&lt; " " &lt;&lt; eDis &lt;&lt; endl;</span></span><br><span class="line">		</span><br><span class="line">		LL ans = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">if</span> (sLayer == eLayer) &#123; <span class="comment">// 如果两个在同一层</span></span><br><span class="line">			ans = _abs(eDis - sDis);</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="keyword">if</span> (sLayer &gt; eLayer || (sLayer == eLayer &amp;&amp; sDis &gt; eDis)) &#123; <span class="comment">// 可能存在起点层数大于终点层数的情况，或者是在同一层但是起点在终点后面，此时进行交换 </span></span><br><span class="line">				LL tempLayer = sLayer;</span><br><span class="line">				sLayer = eLayer;</span><br><span class="line">				eLayer = tempLayer;</span><br><span class="line">				LL tempDis = sDis;</span><br><span class="line">				sDis = eDis;</span><br><span class="line">				eDis = tempDis;</span><br><span class="line">			&#125;</span><br><span class="line">			LL lays = eLayer - sLayer - <span class="number">1</span>; <span class="comment">// 两点之间还有多少层 </span></span><br><span class="line">			<span class="keyword">if</span> (sLayer == <span class="number">0</span>) &#123; <span class="comment">// 起点为原点的情况要特殊考虑，求和公式略有不同 </span></span><br><span class="line">				ans = <span class="number">7</span> * lays + lays * (lays - <span class="number">1</span>) * <span class="number">3</span> + eDis + <span class="number">1</span>;</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				ans = <span class="number">6</span> * sLayer + <span class="number">1</span> - sDis + lays * ((sLayer + <span class="number">1</span>) * <span class="number">6</span> + <span class="number">1</span>) + lays * (lays - <span class="number">1</span>) * <span class="number">3</span> + eDis;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; ans &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h3><p>这题最开始做的时候，踩了很多的坑。在某些地方不小心使用了int型导致数值小的用例可以通过，程序逻辑没问题，但是一直WA。后来试了很多较大的数据，发现是没有使用long long型变量。同时，判断点位于哪个象限时，应该对x与y分别进行判断，而不是使用乘法判断，乘法可能会导致计算结果超出long long所能表示的范围。最好的办法还是自己多画一下这个图，对过程自然而然就清楚了。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/10/15/51Nod - 1117 聪明的木匠  java实现/" rel="next" title="51Nod - 1117 聪明的木匠 java 实现">
+                <i class="fa fa-chevron-left"></i> 51Nod - 1117 聪明的木匠 java 实现
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/hsq-logo.jpg"
+                alt="Wayne Wang" />
+            
+              <p class="site-author-name" itemprop="name">Wayne Wang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xuyonglin222.github.io" title="徐永林" target="_blank">徐永林</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://my.csdn.net/liulifeimeng" title="威少" target="_blank">威少</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://dymonelewis.github.io" title="琪琪Dalao" target="_blank">琪琪Dalao</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#计蒜客-螺旋困境（模拟）-解题方案"><span class="nav-number">1.</span> <span class="nav-text">计蒜客-螺旋困境（模拟）- 解题方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题描述："><span class="nav-number">1.1.</span> <span class="nav-text">问题描述：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#样例输入："><span class="nav-number">1.2.</span> <span class="nav-text">样例输入：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#样例输出："><span class="nav-number">1.3.</span> <span class="nav-text">样例输出：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解题思路："><span class="nav-number">1.4.</span> <span class="nav-text">解题思路：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码实现："><span class="nav-number">1.5.</span> <span class="nav-text">代码实现：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结："><span class="nav-number">1.6.</span> <span class="nav-text">总结：</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wayne Wang</span>
+
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
+<script type="text/javascript" src="/js/src/love.js"></script>

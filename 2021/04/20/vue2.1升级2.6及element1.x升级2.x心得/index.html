@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言:博客停更很久了，可能已经习惯了日复一日的搬砖生活。工作日的两点一线的疲惫，回家之后的低效率成了这几个月自己状态的一个缩影。最近和几位朋友有过一些交流，有的辞去工作重返象牙塔，有的坚持自己的极客之道。若要论忙，比起996或者是边学习边工作还是相差甚远。人，总喜欢为自己的懒找借口。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue2.1升级2.6及element1.x升级2.x心得">
+<meta property="og:url" content="http://yoursite.com/2021/04/20/vue2.1升级2.6及element1.x升级2.x心得/index.html">
+<meta property="og:site_name" content="WayneWang">
+<meta property="og:description" content="前言:博客停更很久了，可能已经习惯了日复一日的搬砖生活。工作日的两点一线的疲惫，回家之后的低效率成了这几个月自己状态的一个缩影。最近和几位朋友有过一些交流，有的辞去工作重返象牙塔，有的坚持自己的极客之道。若要论忙，比起996或者是边学习边工作还是相差甚远。人，总喜欢为自己的懒找借口。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210420080237394.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1dheW5lMTk5OA==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:updated_time" content="2021-04-20T14:17:40.828Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vue2.1升级2.6及element1.x升级2.x心得">
+<meta name="twitter:description" content="前言:博客停更很久了，可能已经习惯了日复一日的搬砖生活。工作日的两点一线的疲惫，回家之后的低效率成了这几个月自己状态的一个缩影。最近和几位朋友有过一些交流，有的辞去工作重返象牙塔，有的坚持自己的极客之道。若要论忙，比起996或者是边学习边工作还是相差甚远。人，总喜欢为自己的懒找借口。">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20210420080237394.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1dheW5lMTk5OA==,size_16,color_FFFFFF,t_70#pic_center">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2021/04/20/vue2.1升级2.6及element1.x升级2.x心得/"/>
+
+
+
+
+
+  <title>vue2.1升级2.6及element1.x升级2.x心得 | WayneWang</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/waynewang98.github.io"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_darkblue_121621.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">WayneWang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            我呀！
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/04/20/vue2.1升级2.6及element1.x升级2.x心得/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Wayne Wang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/hsq-logo.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WayneWang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">vue2.1升级2.6及element1.x升级2.x心得</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-04-20T22:16:36+08:00">
+                2021-04-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/vue/" itemprop="url" rel="index">
+                    <span itemprop="name">vue</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言:"></a>前言:</h2><p>博客停更很久了，可能已经习惯了日复一日的搬砖生活。工作日的两点一线的疲惫，回家之后的低效率成了这几个月自己状态的一个缩影。最近和几位朋友有过一些交流，有的辞去工作重返象牙塔，有的坚持自己的极客之道。若要论忙，比起996或者是边学习边工作还是相差甚远。人，总喜欢为自己的懒找借口。<br><a id="more"></a></p>
+<p>十里银滩，自然风光，钟灵毓秀。两天的阳江之旅，缓解了不少工作上的疲态，躺在酒店，想想还是把这篇博客给写完吧。</p>
+<p>现在前端技术发展的如此之快，elementUI 1.x早已成为过去式，甚至连2.x也即将随着vue升级到3.x版本而渐渐退场。因此这篇博客主要是对老版本elementUI项目的升级做一个记录，也是为将来elementUI结合vue3.x升级提供一个可能的思路。本篇文章主要是结合自己最近工作中对vue2.1 + element 1.x升级到vue2.6 + element 2.15.x所遇到的问题和心得进行一个总结。<br><img src="https://img-blog.csdnimg.cn/20210420080237394.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1dheW5lMTk5OA==,size_16,color_FFFFFF,t_70#pic_center" alt="十里银滩"></p>
+<h2 id="升级原因："><a href="#升级原因：" class="headerlink" title="升级原因："></a>升级原因：</h2><p> 1.项目的技术栈比较老旧，许多业务需要在最新的elementUI的基础上进行开发，靠原生vue手写实现封装花费时间较多且稳定性不是很好；</p>
+<ol>
+<li>老项目中存在一些设计不规范的地方，如全局样式泄露、相同组件样式不统一等，此次升级也能很好的对项目中不规范的地方进行一次扫雷；</li>
+<li>如今大多数开源的vue应用，如easytable、Vue-TreeSelect等都依赖于vue2.2或更高的版本，vue2.1版本显然是没有办法兼容这些组件的；</li>
+<li>vue2.1版本相比2.6版本缺少了一些好用的新特性，升级也是为后续vue3.x升级铺路，保持项目技术栈的活力；</li>
+</ol>
+<h2 id="升级步骤："><a href="#升级步骤：" class="headerlink" title="升级步骤："></a>升级步骤：</h2><p>技术框架升级，其实是需要一个比较长时间的预研的。如果你是对个人项目进行升级，不妨进行大胆的尝试；如果是公司项目，还是需要长时间的预研和同事的支持，因为elementUI1.x到2.x的跨越对大型项目来说，真的有比较大的工作量，还需要花大量的时间进行测试以及升级过程中新的需求的代码合并。由于有些内容涉及到公司的代码，因此无法展示出来，只能用文字进行相应的介绍，不便之处，敬请谅解。</p>
+<h3 id="一、安装新版本的vue和elementUI"><a href="#一、安装新版本的vue和elementUI" class="headerlink" title="一、安装新版本的vue和elementUI"></a>一、安装新版本的vue和elementUI</h3><p>我这里使用的是2.6.x版本，elementUI为2.15.x版本（如果你的vue-loader版本较低，可能还需要升级vue-loader）。同时，还要对其他使用的vue组件进行升级，这里主要是介绍elementUI升级，如果有其他开源组件也需要升级，可以自己摸索。</p>
+<h3 id="二、解决控制台警告和报错"><a href="#二、解决控制台警告和报错" class="headerlink" title="二、解决控制台警告和报错"></a>二、解决控制台警告和报错</h3><p>在安装新版本vue和elementUI之后，我们可以尝试运行一下我们的项目，不出意外的话是会有一些控制台报错的，项目无法运行。不同项目的报错和警告可能也不太一样，我在这里总结了一些常见的警告和报错：</p>
+<ol>
+<li>HTML标签未闭合：vue2.1升级到2.2时加入了HTML标签检查机制，如果发现了未闭合的HTML标签，需要我们进行补全。</li>
+<li>对某些元素同时绑定了v-model和v-bind：需要移除v-bind，保留v-model</li>
+<li>在模板中使用了未在实例上挂载的变量：常见的情况如未在data中注册变量，但是在模板中使用了该变量，这在早期vue版本中是能运行的。</li>
+<li>computed中的属性被强制修改：需要在computed中使用setter和getter访问和设置变量。</li>
+</ol>
+<p>当然可能还有别的报错，面对这些报错还是不能着急，一个一个修改就完事儿了，当这些控制台报错都解决了之后，项目就能成功运行了。</p>
+<h3 id="三、解决非兼容性更新带来的警告"><a href="#三、解决非兼容性更新带来的警告" class="headerlink" title="三、解决非兼容性更新带来的警告"></a>三、解决非兼容性更新带来的警告</h3><p>虽然项目能跑起来了，但是控制台还会有很多警告：一部分是来自vue本身的警告，还有一些是elementUI的非兼容属性或者即将废弃的属性所带来的警告，需要我们对这些警告进行修改。常见的有：</p>
+<ol>
+<li>v-for循环渲染组件时，必须为组件绑定key值</li>
+<li>v-for绑定的key值中，存在同样的key值</li>
+<li>element中的废弃属性带来的警告，如：input中的icon改为suffix-icon；switch组件属性名称变化等。</li>
+</ol>
+<h3 id="四、解决elementUI非兼容性更新带来的问题"><a href="#四、解决elementUI非兼容性更新带来的问题" class="headerlink" title="四、解决elementUI非兼容性更新带来的问题"></a>四、解决elementUI非兼容性更新带来的问题</h3><p>这部分是升级的重头戏，也是问题最多的地方，稍不注意就有可能有遗漏，导致项目某些功能无法正常使用，因此需要先了解elementUI升级所带来的所有非兼容性更新，这些非兼容性更新可以在elementUI的更新文档中找到:<a href="https://element.eleme.cn/#/zh-CN/component/changelog" target="_blank" rel="noopener">https://element.eleme.cn/#/zh-CN/component/changelog</a>，为了方便大家查找这些非兼容性更新，我<strong>按组件</strong>对这些非兼容性更新进行了汇总，上传到了github，有需要的可以进行下载：</p>
+<p><strong>elementUI非兼容性更新汇总：</strong><br><a href="https://github.com/WayneWang98/element-upgrade" target="_blank" rel="noopener">https://github.com/WayneWang98/element-upgrade</a><br>在这里举出一些常见的非兼容性更新以及解决方案供大家参考：</p>
+<ol>
+<li>升级后很多el-icon名称发生了变化导致无法显示，需要去文档查看最新的icon名称；</li>
+<li>Checkbox的change事件中，参数由event变为了value，进行修改即可；</li>
+<li>移除了input的icon属性。现在通过suffix-icon或者suffix具名插槽来加入尾部图标；</li>
+<li>input组件的change 事件现在仅在输入框失去焦点或用户按下回车时触发，与原生 input 元素一致。如果需要实时响应用户的输入，可以使用 input 事件；</li>
+<li>Input的id属性被传递到了最底层的input元素，需要关注有id的el-input；</li>
+<li>el-switch中：由于 on-<em> 属性在 JSX 中会被识别为事件，导致 Switch 所有 on-</em> 属性在 JSX 中无法正常工作，所以 on-<em> 属性更名为 active-</em>，对应地，off-<em> 属性更名为 inactive-</em>；</li>
+<li>日期控件中，点击清空按钮时，change中的参数由’’变为null，需要根据实际的业务逻辑进行修改；</li>
+<li>table表格组件移除通过 inline-template 自定义列模板的功能，现在可以使用slot-scope实现自定义列模板功能；</li>
+<li>表单组件的 change 事件和 Pagination 的 current-change 事件现在仅响应用户交互：以前可以当currentPage被改变时，就会触发current-change，现在只有用户主动操作时才会触发current-change，需要根据实际业务进行修改；<br>10.el-dialog：移除 size 属性，现在 Dialog 的尺寸由 width 和 fullscreen 控制 ，移除通过 v-model 控制 Dialog 显示和隐藏的功能</li>
+</ol>
+<p>更多的内容可以参考上面我的github中的详情文档。</p>
+<p>非兼容性更新影响点特别多，我这里采用的方式是按模块进行修改，对文档中的非兼容性更新挨个进行查找与修改，与现有项目的功能保持一致。这也是最花时间的地方。修改时一定要细致谨慎，真的很容易出错。我们是很多同事一起修改，有问题一起讨论，因为项目真的很大。</p>
+<h3 id="五、修改样式，进行测试"><a href="#五、修改样式，进行测试" class="headerlink" title="五、修改样式，进行测试"></a>五、修改样式，进行测试</h3><p>进行到了这一步，其实项目中最难的非兼容性更新已经搞定了，项目的功能是没什么问题了，你只需要进行一些样式调整即可与老版本项目保持一致的功能了。<br>至于如何进行测试，每个项目的方法也不同，但是建议把测试时间尽量拉长一点，这样子才能发现项目中潜在的问题。</p>
+<h2 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h2><ol>
+<li>一些老项目的技术栈已经较难满足新的需求时，需要进行升级，长痛不如短痛。</li>
+<li>升级过程中先解决控制台报错，让项目先能够运行起来，再对具体的功能进行验证与修改。</li>
+<li>技术栈升级中，预研真的非常重要，足够时间的预研能够减少升级过程中踩到的坑，预研时可以多参考技术栈的更新文档，这是最官方也是最全面的升级资料。</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/11/16/51Nod-1294-修改数组/" rel="next" title="51Nod - 1294 修改数组">
+                <i class="fa fa-chevron-left"></i> 51Nod - 1294 修改数组
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/hsq-logo.jpg"
+                alt="Wayne Wang" />
+            
+              <p class="site-author-name" itemprop="name">Wayne Wang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xuyonglin222.github.io" title="徐永林" target="_blank">徐永林</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://my.csdn.net/liulifeimeng" title="威少" target="_blank">威少</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://dymonelewis.github.io" title="琪琪Dalao" target="_blank">琪琪Dalao</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#升级原因："><span class="nav-number">2.</span> <span class="nav-text">升级原因：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#升级步骤："><span class="nav-number">3.</span> <span class="nav-text">升级步骤：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、安装新版本的vue和elementUI"><span class="nav-number">3.1.</span> <span class="nav-text">一、安装新版本的vue和elementUI</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、解决控制台警告和报错"><span class="nav-number">3.2.</span> <span class="nav-text">二、解决控制台警告和报错</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、解决非兼容性更新带来的警告"><span class="nav-number">3.3.</span> <span class="nav-text">三、解决非兼容性更新带来的警告</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四、解决elementUI非兼容性更新带来的问题"><span class="nav-number">3.4.</span> <span class="nav-text">四、解决elementUI非兼容性更新带来的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#五、修改样式，进行测试"><span class="nav-number">3.5.</span> <span class="nav-text">五、修改样式，进行测试</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结："><span class="nav-number">4.</span> <span class="nav-text">总结：</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wayne Wang</span>
+
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
+<script type="text/javascript" src="/js/src/love.js"></script>
